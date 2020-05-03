@@ -10,7 +10,6 @@ enum paymentType{
 };
 
 @Entity
-@Table(name="payment")
 public class Payment {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
