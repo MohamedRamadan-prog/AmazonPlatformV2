@@ -4,7 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -15,6 +20,8 @@ public class Product {
     @Column(nullable=false)
     @NotEmpty()
     private String name;
+    @Column
+    private double price;
     @Column(nullable=false)
     String creationDateTime;
     private List<Review> reviews;
@@ -59,4 +66,18 @@ public class Product {
     {
         this.reviews = reviews;
     }
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setCreationDateTime(String creationDateTime) {
+		this.creationDateTime = creationDateTime;
+	}
+    
+    
 }

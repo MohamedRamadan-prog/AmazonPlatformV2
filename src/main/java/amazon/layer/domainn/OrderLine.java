@@ -29,6 +29,15 @@ public class OrderLine {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
+	public OrderLine(int quantity, double price, Seller seller, Product product, OrderStatus orderStatus) {
+		super();
+		this.quantity = quantity;
+		this.price = price;
+		this.seller = seller;
+		this.product = product;
+		this.orderStatus = orderStatus;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -41,8 +50,8 @@ public class OrderLine {
 		return price;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void calculatePrice() {
+		this.price = quantity * product.getPrice();
 	}
 
 	public Seller getSeller() {

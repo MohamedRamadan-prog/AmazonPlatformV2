@@ -5,6 +5,7 @@
 package amazon.layer.domainn;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -28,6 +29,11 @@ public class Order {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<OrderLine> orderLines;
+
+	public Order() {
+		this.orderLines = new HashSet<OrderLine>();
+
+	}
 
 	@PostConstruct
 	public void constructCreationDate(LocalDate date) {
@@ -54,4 +60,7 @@ public class Order {
 		this.orderLines = orderLines;
 	}
 
+	public void addOrderLine(OrderLine orderLine) {
+		this.orderLines.add(orderLine);
+	}
 }
