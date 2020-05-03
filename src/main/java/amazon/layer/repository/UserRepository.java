@@ -1,0 +1,13 @@
+package amazon.layer.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import amazon.layer.domainn.User;
+
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+	
+    User findByEmail(String username);
+
+}

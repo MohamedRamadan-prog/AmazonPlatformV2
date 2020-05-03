@@ -1,1 +1,1 @@
-# AmazonPlatformV2
+# AmazonPlatform
