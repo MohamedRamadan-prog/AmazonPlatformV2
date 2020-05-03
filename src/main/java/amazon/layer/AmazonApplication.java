@@ -7,9 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import amazon.layer.domainn.Buyer;
 import amazon.layer.domainn.Role;
-import amazon.layer.domainn.Seller;
 import amazon.layer.domainn.User;
 import amazon.layer.repository.RoleRepository;
 import amazon.layer.repository.UserRepository;

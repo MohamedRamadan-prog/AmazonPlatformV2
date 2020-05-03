@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(name="review")
 public class Review {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(nullable=false)
     @NotEmpty()
     private String comment;
@@ -18,6 +18,7 @@ public class Review {
     String creationDateTime;
     @Column(nullable=false)
     Boolean accepted;
+    
     public Review(){}
 
     public Review(@NotEmpty String comment){
@@ -27,11 +28,11 @@ public class Review {
         this.creationDateTime = dtf.format(LocalDate.now());
         this.accepted = false;
     }
-    public Integer getId()
+    public Long getId()
     {
         return id;
     }
-    public void setId(Integer id)
+    public void setId(Long id)
     {
         this.id = id;
     }

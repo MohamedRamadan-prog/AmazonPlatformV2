@@ -1,6 +1,8 @@
 package amazon.layer.domainn;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,18 +16,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-/*
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
- */
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="users")
@@ -56,6 +55,29 @@ public class User
     joinColumns = { @JoinColumn(name = "user_id") },
     inverseJoinColumns = { @JoinColumn(name = "role_id") })
     private List<Role> roles;
+
+    // Buyer Part
+	@OneToMany(cascade = CascadeType.ALL)
+	@Valid
+	Set<@Valid Order> orders;
+
+	@Valid
+	@OneToOne(cascade = CascadeType.ALL)
+	Payment payment;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@Valid
+	Set<@Valid Review> reviews;
+	
+	// Seller Part
+	@OneToMany(cascade = CascadeType.ALL)
+	Set<Product> products ;
+	@Column
+	boolean isActive;
+
+    
+    
+    
     public User(){}
     
     public User(@NotEmpty String name, @NotEmpty @Email(message = "{errors.invalid_email}") String email,
@@ -68,7 +90,12 @@ public class User
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.Address = Address;
-	}
+		orders = new HashSet<Order>();
+		reviews = new HashSet<Review>();
+		isActive = false;
+		products = new HashSet<Product>();
+
+    }
     
  
     public Integer getId()
@@ -135,6 +162,55 @@ public class User
 	public void setAddress(String address) {
 		Address = address;
 	}
-    
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public void addOrder(Order order) {
+		this.orders.add(order);
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public Set<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	 
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product>products) {
+		this.products = products;
+	}
+	
+	public void addProduct(Product product)
+	{
+		products.add(product);
+	}
     
 }

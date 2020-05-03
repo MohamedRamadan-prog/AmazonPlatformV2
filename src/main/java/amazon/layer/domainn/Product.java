@@ -2,43 +2,57 @@ package amazon.layer.domainn;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="product")
 public class Product {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(nullable=false)
     @NotEmpty()
     private String name;
     @Column
-    private double price;
+    private String discription;
     @Column(nullable=false)
     String creationDateTime;
-    private List<Review> reviews;
-    public Product(){}
-
-    public Product(@NotEmpty String name){
+    @Column
+    private Integer quntityAvaliable;
+    @Column
+    private double price;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Valid
+    private User seller ;
+    @OneToMany(cascade = CascadeType.ALL)
+    @Valid
+    private Set<Review> reviews;
+    
+    public Product(User seller){
         super();
-        this.name = name;
+        this.seller =seller;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mm/dd/yy HH:mm:ss");
         this.creationDateTime = dtf.format(LocalDate.now());
-        this.reviews = null;
+        reviews = new HashSet<Review>();
     }
-    public Integer getId()
+    public Long getId()
     {
         return id;
     }
-    public void setId(Integer id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -58,13 +72,18 @@ public class Product {
     {
         this.creationDateTime = creationDateTime;
     }
-    public List<Review> getReviews()
+    public Set<Review> getReviews()
     {
         return reviews;
     }
-    public void setReviews(List<Review> Reviews)
+    public void setReviews(Set<Review> reviews)
     {
         this.reviews = reviews;
+    }
+    public void addReviews(Review review)
+    {
+    	
+        this.reviews.add(review);
     }
 
 	public double getPrice() {
@@ -78,6 +97,26 @@ public class Product {
 	public void setCreationDateTime(String creationDateTime) {
 		this.creationDateTime = creationDateTime;
 	}
+	public String getDiscription() {
+		return discription;
+	}
+	public void setDiscription(String discription) {
+		this.discription = discription;
+	}
+	public Integer getQuntityAvaliable() {
+		return quntityAvaliable;
+	}
+	public void setQuntityAvaliable(Integer quntityAvaliable) {
+		this.quntityAvaliable = quntityAvaliable;
+	}
+	public User getSeller() {
+		return seller;
+	}
+	public void setSeller(User seller) {
+		this.seller = seller;
+	}
+	
     
+	
     
 }

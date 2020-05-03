@@ -26,6 +26,10 @@ public  class UserMapper {
     	List<Role> roles = new ArrayList<Role>();
 		roles.add(newrole);
 		newUser.setRoles(roles);
+		newUser.setAddress("-");
+		newUser.setFirstName("-");
+		newUser.setLastName("-");
+
 		
 	return newUser;
 	}

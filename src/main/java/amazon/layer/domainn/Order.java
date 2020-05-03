@@ -16,8 +16,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.Valid;
 
 @Entity
+@Table(name = "Order_Table")
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +31,8 @@ public class Order {
 	private double totalPrice;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private Set<OrderLine> orderLines;
+	@Valid
+	private Set<@Valid OrderLine> orderLines;
 
 	public Order() {
 		this.orderLines = new HashSet<OrderLine>();

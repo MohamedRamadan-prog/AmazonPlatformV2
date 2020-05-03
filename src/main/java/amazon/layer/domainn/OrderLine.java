@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 
 @Entity
 public class OrderLine {
@@ -21,15 +22,18 @@ public class OrderLine {
 	@Column
 	private double price;
 	@OneToOne(cascade = CascadeType.ALL)
-	private Seller seller;
+	@Valid
+	private User seller;
 	@OneToOne(cascade = CascadeType.ALL)
+	@Valid
 	private Product product;
 	@ManyToOne(cascade = CascadeType.ALL)
+	@Valid
 	private Order order;
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
-	public OrderLine(int quantity, double price, Seller seller, Product product, OrderStatus orderStatus) {
+	public OrderLine(int quantity, double price, User seller, Product product, OrderStatus orderStatus) {
 		super();
 		this.quantity = quantity;
 		this.price = price;
@@ -54,11 +58,11 @@ public class OrderLine {
 		this.price = quantity * product.getPrice();
 	}
 
-	public Seller getSeller() {
+	public User getSeller() {
 		return seller;
 	}
 
-	public void setSeller(Seller seller) {
+	public void setSeller(User seller) {
 		this.seller = seller;
 	}
 
