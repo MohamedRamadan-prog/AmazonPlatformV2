@@ -1,12 +1,32 @@
 package amazon.layer.domainn;
 
-public class OrderLine {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
+@Entity
+public class OrderLine {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long Id;
+	@Column
 	private int quantity;
+	@Column
 	private double price;
+	@OneToOne(cascade = CascadeType.ALL)
 	private Seller seller;
+	@OneToOne(cascade = CascadeType.ALL)
 	private Product product;
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Order order;
+	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
 	public int getQuantity() {
