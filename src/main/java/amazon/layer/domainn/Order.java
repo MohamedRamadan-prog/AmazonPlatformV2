@@ -4,26 +4,39 @@
 
 package amazon.layer.domainn;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Order {
-	private Date creationDate;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long Id;
+	@Column
+	private LocalDate creationDate;
+	@Column
 	private double totalPrice;
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<OrderLine> orderLines;
 
 	@PostConstruct
-	public void constructCreationDate(Date date) {
-		this.creationDate = new Date();
+	public void constructCreationDate(LocalDate date) {
+		this.creationDate = LocalDate.now();
 	}
 
-	public Date getCreationDate() {
+	public LocalDate getCreationDate() {
 		return creationDate;
 	}
-
-	
 
 	public double getTotalPrice() {
 		return totalPrice;
