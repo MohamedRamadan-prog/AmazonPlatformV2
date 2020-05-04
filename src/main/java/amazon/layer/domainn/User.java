@@ -24,39 +24,39 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="users")
-public class User
-{
-    @Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private Integer id;
-    @Column(nullable=false)
-    @NotEmpty()
-    private String name;
-    @Column(nullable=false, unique=true)
-    @NotEmpty
-    @Email(message="{errors.invalid_email}")
-    private String email;
-    @Column(nullable=false)
-    @NotEmpty
-    @Size(min=4)
-    private String password;
-    @NotEmpty
-    private String firstName;
-    @NotEmpty
-    private String lastName;
-    @NotEmpty
-    private String Address;
+@Table(name = "users")
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Integer id;
+	@Column(nullable = false)
+	@NotEmpty()
+	private String name;
+	@Column(nullable = false, unique = true)
+	@NotEmpty
+	@Email(message = "{errors.invalid_email}")
+	private String email;
+	@Column(nullable = false)
+	@NotEmpty
+	@Size(min = 4)
+	private String password;
+	@NotEmpty
+	private String firstName;
+	@NotEmpty
+	private String lastName;
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name="user_role",
-    joinColumns = { @JoinColumn(name = "user_id") },
-    inverseJoinColumns = { @JoinColumn(name = "role_id") })
-    private List<Role> roles;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
+	private Address address;
 
-    // Buyer Part
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	private List<Role> roles;
+
+	// Buyer Part
 	@OneToMany(cascade = CascadeType.ALL)
 	@Valid
 	Set<@Valid Order> orders;
@@ -68,20 +68,19 @@ public class User
 	@OneToMany(cascade = CascadeType.ALL)
 	@Valid
 	Set<@Valid Review> reviews;
-	
+
 	// Seller Part
 	@OneToMany(cascade = CascadeType.ALL)
-	Set<Product> products ;
+	Set<Product> products;
 	@Column
 	boolean isActive;
 
-    
-    
-    
-    public User(){}
-    
-    public User(@NotEmpty String name, @NotEmpty @Email(message = "{errors.invalid_email}") String email,
-		@NotEmpty @Size(min = 4) String password, List<Role> roles ,@NotEmpty String firstName ,@NotEmpty  String lastName ,@NotEmpty  String Address ) {
+	public User() {
+	}
+
+	public User(@NotEmpty String name, @NotEmpty @Email(message = "{errors.invalid_email}") String email,
+			@NotEmpty @Size(min = 4) String password, List<Role> roles, @NotEmpty String firstName,
+			@NotEmpty String lastName, Address address) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -89,55 +88,53 @@ public class User
 		this.roles = roles;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.Address = Address;
+		this.address = address;
 		orders = new HashSet<Order>();
 		reviews = new HashSet<Review>();
 		isActive = false;
 		products = new HashSet<Product>();
 
-    }
-    
- 
-    public Integer getId()
-    {
-        return id;
-    }
-    public void setId(Integer id)
-    {
-        this.id = id;
-    }
-    public String getName()
-    {
-        return name;
-    }
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-    public String getEmail()
-    {
-        return email;
-    }
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-    public String getPassword()
-    {
-        return password;
-    }
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-    public List<Role> getRoles()
-    {
-        return roles;
-    }
-    public void setRoles(List<Role> roles)
-    {
-        this.roles = roles;
-    }
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -155,12 +152,12 @@ public class User
 		this.lastName = lastName;
 	}
 
-	public String getAddress() {
-		return Address;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAddress(String address) {
-		Address = address;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public Set<Order> getOrders() {
@@ -191,7 +188,6 @@ public class User
 		this.reviews = reviews;
 	}
 
-
 	public boolean isActive() {
 		return isActive;
 	}
@@ -199,18 +195,17 @@ public class User
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	 
+
 	public Set<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<Product>products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
-	
-	public void addProduct(Product product)
-	{
+
+	public void addProduct(Product product) {
 		products.add(product);
 	}
-    
+
 }

@@ -15,7 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
@@ -33,6 +35,13 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL)
 	@Valid
 	private Set<@Valid OrderLine> orderLines;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
+	private Address shippingAddress;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
+	private Address billingAddress;
 
 	public Order() {
 		this.orderLines = new HashSet<OrderLine>();
@@ -67,4 +76,21 @@ public class Order {
 	public void addOrderLine(OrderLine orderLine) {
 		this.orderLines.add(orderLine);
 	}
+
+	public Address getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public Address getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(Address billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
 }
