@@ -20,7 +20,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value = {"/"})
+	@RequestMapping(value = {"/" , "/login"})
     public String defaultlogin (Model model){
         return "login";
     }
