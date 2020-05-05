@@ -29,7 +29,7 @@ public class UserController {
 
 	@RequestMapping(value = "/home")
 	public String home(Model model) {
-	
+
 		return "home";
 	}
 
