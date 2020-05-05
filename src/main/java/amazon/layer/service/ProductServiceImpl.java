@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product addProduct(@Valid ProductForm newProduct, String sellerEmail) {
+	public Product saveOrUpdate(@Valid ProductForm newProduct, String sellerEmail) {
 
 		User seller = userRepository.findByEmail(sellerEmail);
 
@@ -42,8 +42,35 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Optional<Product> getProductById(Long productId) {
-		
+
 		return productRepository.findById(productId);
+	}
+
+	@Override
+	public void update(ProductForm product, Long productId) {
+
+		Product oldProduct = getProductById(productId).get();
+
+		productRepository.save(updateProduct(oldProduct, product));
+
+	}
+
+	private Product updateProduct(Product oldProduct, ProductForm product) {
+		oldProduct.setName(product.getName());
+		oldProduct.setDiscription(product.getDiscription());
+		oldProduct.setPrice(product.getPrice());
+		oldProduct.setQuntityAvaliable(product.getQuntityAvaliable());
+		return oldProduct;
+	}
+
+	@Override
+	public boolean deleteById(Long productId) {
+		Product product = getProductById(productId).get();
+		if (product.isPurchasedBefore())
+			return false;
+
+		productRepository.delete(product);
+		return false;
 	}
 
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<title>Update Product</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<hr>
+
+		<p class="h4 mb-4">Update Product</p>
+
+		<form action="#" th:action="@{/products/updateProduct}"
+			th:object="${product}" method="POST"
+			enctype="multipart/form-data">
+
+			<!-- Add hidden form field to handle update -->
+
+
+			<input type="text" th:field="*{name}" class="form-control mb-4 col-4"
+				placeholder="Product Name"> <input type="text"
+				th:field="*{discription}" class="form-control mb-4 col-4"
+				placeholder="Discription"> <input type="text"
+				th:field="*{quntityAvaliable}" class="form-control mb-4 col-4"
+				placeholder="Units In Stock">
+
+
+									<input type="hidden" name="id" th:value="${product.id}" />
+
+			<button type="submit" class="btn btn-info col-2">Update</button>
+
+		</form>
+
+		<hr>
+		<a th:href="@{/products/list}">Back to Products list</a>
+
+	</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

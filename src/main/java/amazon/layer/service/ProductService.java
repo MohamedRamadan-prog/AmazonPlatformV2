@@ -12,8 +12,12 @@ public interface ProductService {
 
 	List<Product> getAllProducts();
 
-	Product addProduct(@Valid ProductForm newProduct, String sellerEmail);
+	Product saveOrUpdate(@Valid ProductForm newProduct, String sellerEmail);
 
 	Optional<Product> getProductById(Long productId);
+
+	void update(ProductForm product, Long productId);
+
+	boolean deleteById(Long productId);
 
 }

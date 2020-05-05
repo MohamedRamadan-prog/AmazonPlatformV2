@@ -19,14 +19,10 @@
 
 <body>
 
-	<div class="container">
-<div th:text="@{/}" />
-<div th:text="${#request.contextPath}" />
+	Product Details
 
-		 <img th:src="@{${ '/ROOT/' +product.id+ '.png'}}" title="TODO" />
-		
-
-	</div>
+	<hr>
+	<a th:href="@{/products/list}">Back to Products list</a>
 
 </body>
 </html>

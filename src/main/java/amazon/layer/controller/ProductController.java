@@ -1,12 +1,13 @@
 package amazon.layer.controller;
 
-import java.io.File;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -28,6 +29,9 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private StorageService storageService;
+
 	@RequestMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
@@ -37,6 +41,20 @@ public class ProductController {
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct) {
 		return "addProduct";
+	}
+
+	@RequestMapping(value = "/updateProductForm", method = RequestMethod.GET)
+	public String updateProduct(@RequestParam(value = "id", required = false) Long productId, Model model) {
+		Optional<Product> product = productService.getProductById(productId);
+		model.addAttribute("product", product.get());
+		return "updateProduct";
+	}
+
+	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
+	public String processUpdateProduct(@RequestParam(value = "id", required = false) Long productId,
+			@ModelAttribute("product") ProductForm product) {
+		productService.update(product, productId);
+		return "redirect:/products/list";
 	}
 
 	@RequestMapping("/product")
@@ -61,18 +79,20 @@ public class ProductController {
 		}
 
 		MultipartFile productImage = newProduct.getProductImage();
-		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 
-		Product product = productService.addProduct(newProduct, "seller@gmail.com");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		if (productImage != null && !productImage.isEmpty()) {
-			try {
-				productImage.transferTo(new File(product.getId() + ".png"));
-			} catch (Exception e) {
-				throw new RuntimeException("Product Image saving failed", e);
-			}
-		}
+		Product product = productService.saveOrUpdate(newProduct, ((UserDetails) principal).getUsername());
+		storageService.saveImage(productImage, product.getId());
 
+		return "redirect:/products/list";
+	}
+
+	@RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
+	public String removeProduct(@RequestParam(value = "id", required = false) Long productId) {
+
+		boolean isDeleted = productService.deleteById(productId);
+//TODO
 		return "redirect:/products/list";
 	}
 

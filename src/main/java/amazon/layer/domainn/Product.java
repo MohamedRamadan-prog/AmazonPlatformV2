@@ -34,6 +34,8 @@ public class Product {
 	@Column
 	private Integer quntityAvaliable;
 	@Column
+	private boolean isPurchasedBefore;
+	@Column
 	private double price;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
@@ -51,6 +53,15 @@ public class Product {
 		this.seller = seller;
 		this.creationDateTime = new Date();
 		reviews = new HashSet<Review>();
+		this.isPurchasedBefore = false;
+	}
+
+	public boolean isPurchasedBefore() {
+		return isPurchasedBefore;
+	}
+
+	public void setPurchasedBefore(boolean isPurchasedBefore) {
+		this.isPurchasedBefore = isPurchasedBefore;
 	}
 
 	public Long getId() {
