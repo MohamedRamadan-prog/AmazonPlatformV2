@@ -17,6 +17,11 @@ public class Address {
 	private String zipCode;
 	private String addressLine;
 
+	
+	public Address() {
+		super();
+	}
+
 	public Address(String state, String city, String zipCode, String addressLine) {
 		super();
 		this.state = state;
