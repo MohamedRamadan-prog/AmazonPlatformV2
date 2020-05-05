@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+
 @Entity
 @Table(name="review")
 public class Review {
@@ -15,7 +16,7 @@ public class Review {
     @NotEmpty()
     private String comment;
     @Column(nullable=false)
-    String creationDateTime;
+    LocalDate creationDateTime;
     @Column(nullable=false)
     Boolean accepted;
     
@@ -24,8 +25,7 @@ public class Review {
     public Review(@NotEmpty String comment){
         super();
         this.comment = comment;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mm/dd/yy HH:mm:ss");
-        this.creationDateTime = dtf.format(LocalDate.now());
+        this.creationDateTime =LocalDate.now();
         this.accepted = false;
     }
     public Long getId()
@@ -44,11 +44,11 @@ public class Review {
     {
         this.comment = comment;
     }
-    public String getCreationDateTime()
+    public LocalDate getCreationDateTime()
     {
         return creationDateTime;
     }
-    public void CreationDateTime(String creationDateTime)
+    public void CreationDateTime(LocalDate creationDateTime)
     {
         this.creationDateTime = creationDateTime;
     }

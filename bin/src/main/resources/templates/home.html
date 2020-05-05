@@ -13,23 +13,11 @@
 <body>
 
 
-<div sec:authorize="hasAuthority('ADMIN')" > 
-	 
-	<h4> Admin Page</h4>
-	
-	<form th:action="@{/review/getReviws}">
-	  <input type ="submit" name="Get Reviews" value="Get Review">
-	</form>		
+<div sec:authorize="hasAuthority('ADMIN')" > Has Authority ADMIN </div> 
+<div sec:authorize="hasAuthority('SELLER')" > Has Authority SELLER </div> 
+<div sec:authorize="hasAuthority('BUYER')" > Has Authority BUYER </div> 
 
-</div>
- 
-<div sec:authorize="hasAuthority('SELLER')" > 
-	<h4> Admin Page</h4>
-</div> 
 
-<div sec:authorize="hasAuthority('BUYER')" > 
-	<h4> Admin Page</h4>
-</div> 
 
 </body>
 </html>

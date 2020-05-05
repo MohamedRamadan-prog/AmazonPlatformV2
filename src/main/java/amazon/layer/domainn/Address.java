@@ -24,7 +24,9 @@ public class Address {
 		this.zipCode = zipCode;
 		this.addressLine = addressLine;
 	}
-
+	
+	public Address() {}
+	
 	public String getState() {
 		return state;
 	}
