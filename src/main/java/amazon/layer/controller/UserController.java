@@ -25,12 +25,6 @@ public class UserController {
         return "login";
     }
 	
-	@RequestMapping(value = {"/login"})
-    public String login (Model model){
-		
-        return "redirect:/home";
-    }
-	
 	@RequestMapping(value = "/home")
     public String home (Model model){
         return "home";

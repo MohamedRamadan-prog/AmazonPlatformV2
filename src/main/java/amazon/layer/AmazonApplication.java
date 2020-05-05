@@ -35,6 +35,10 @@ public class AmazonApplication {
 			List<Role> roles1_2 = new ArrayList<Role>();
 			roles1_2.add(new Role("SELLER"));
 			
+			List<Role> roles11 = new ArrayList<Role>();
+			roles11.add(new Role("SELLER"));
+			List<Role> roles22 = new ArrayList<Role>();
+			roles22.add(new Role("SELLER"));
 			List<Role> roles2 = new ArrayList<Role>();
 			roles2.add(new Role("ADMIN"));
 			
@@ -43,7 +47,9 @@ public class AmazonApplication {
 			
 			Address address = new Address("IOWA", "fairField", "123654", "4st");
 			User seller = new User("seller" ,"seller@gmail.com", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",roles1 , "-"  ,  "-"  , address );
-			User seller2 = new User("seller2" ,"seller2@gmail.com", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",roles1_2 , "-"  ,  "-" ,new Address("IOWA", "fairField", "123654", "4st") );
+			User seller1 = new User("seller" ,"seller2@gmail.com", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",roles11 , "Ibrahim"  ,  "Mark"  ,new Address("IOWA", "fairField", "123654", "4st") );
+			User seller2 = new User("seller" ,"seller3@gmail.com", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",roles22 , "Thomas"  ,  "John" ,new Address("IOWA", "fairField", "123654", "4st") );
+
 			User admin = new  User("admin","admin@gmail.com", "$2a$08$bCCcGjB03eulCWt3CY0AZew2rVzXFyouUolL5dkL/pBgFkUH9O4J2", roles2, "-" , "-"  ,new Address("IOWA", "fairField", "123654", "4st") );
 			User buyer = new  User("buyer","buyer@gmail.com", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",roles3, "-"  , "-"  ,new Address("IOWA", "fairField", "123654", "4st"));
 
@@ -70,7 +76,9 @@ public class AmazonApplication {
 	
 	
 			userReository.save(seller);
+	        userReository.save(seller1);
 			userReository.save(seller2);
+
 			userReository.save(buyer); 
 			userReository.save(admin);
 		};

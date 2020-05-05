@@ -43,5 +43,4 @@ public class ReviewController {
 		return "redirect:/review/getReviws";
 	}
 
-	
 }
