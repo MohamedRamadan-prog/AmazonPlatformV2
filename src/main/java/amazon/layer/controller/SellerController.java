@@ -38,5 +38,14 @@ public class SellerController {
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/seller/inActive_Sellers";
 	}
+	@RequestMapping(value = "/sellerProducts")
+	public String showSellerProducts(){
+		return "sellerProducts";
+	}
+
+	@RequestMapping(value = "/sellerOrders")
+	public String showSellerOrders(){
+		return "sellerOrders";
+	}
 
 }

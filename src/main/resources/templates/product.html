@@ -17,12 +17,50 @@
 <title>Amazon</title>
 </head>
 
+
+
 <body>
 
-	Product Details
+	<div class="container">
 
-	<hr>
-	<a th:href="@{/products/list}">Back to Products list</a>
+		<h3>Product Details</h3>
+		<hr>
+
+		
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Product Name</th>
+					<th>Product Discription</th>
+					<th>Product Price</th>
+					<th>Product image</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+
+					<td th:text="${product.name}" />
+					<td th:text="${product.discription}" />
+					<td th:text="${product.price}" />
+					<td>
+						<div class="row">
+
+							<div class="col-small">
+								<img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
+<img th:src="@{'/users/' + ${product.id} + '.png'}" width="300" height="300"/>
+
+							</div>
+
+
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
 
 </body>
+
 </html>
