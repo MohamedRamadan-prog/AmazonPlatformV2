@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<title>Amazon</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h3>Products</h3>
+		<hr>
+
+		<!-- Add a button -->
+		<a th:href="@{/products/addProduct}"
+			class="btn btn-primary btn-sm mb-3"> Add Product </a>
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Product Name</th>
+					<th>Product Discription</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="product : ${products}">
+
+					<td th:text="${product.name}" />
+					<td th:text="${product.discription}" />
+					<td>
+						<div class="row">
+
+							<div class="col-small">
+								<!-- Add "update" button/link -->
+								<form action="#" th:action="@{/products/updateProductForm}"
+									method="GET">
+
+									<input type="hidden" name="id" th:value="${product.id}" />
+									<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">update</button>
+
+								</form>
+
+							</div>
+
+							<div class="col-small">
+								<!-- Add "update" button/link -->
+								<form action="#" th:action="@{/products/product}" method="GET">
+
+									<input type="hidden" name="id" th:value="${product.id}" />
+									<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Details</button>
+
+								</form>
+
+							</div>
+
+							<div class="col-small">
+								<!-- Add "delete" button/link -->
+								<form action="#" th:action="@{/products/removeProduct}"
+									method="POST">
+
+									<input type="hidden" name="id" th:value="${product.id}" />
+									<button type="submit" class="btn btn-danger btn-sm ml-3 mr-1"
+										onclick="if (!(confirm('Are you sure you want to delete this product?'))) return false">
+										Delete</button>
+
+								</form>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+</html>

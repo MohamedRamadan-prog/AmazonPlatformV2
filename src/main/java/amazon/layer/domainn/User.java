@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -25,20 +23,19 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(nullable = false)
-	@NotEmpty()
+	@Column
+	@NotEmpty
 	private String name;
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	@NotEmpty
 	@Email(message = "{errors.invalid_email}")
 	private String email;
-	@Column(nullable = false)
+	@Column
 	@NotEmpty
 	@Size(min = 4)
 	private String password;
@@ -56,11 +53,6 @@ public class User {
 			@JoinColumn(name = "role_id") })
 	private List<Role> roles;
 
-	// Buyer Part
-	@OneToMany(cascade = CascadeType.ALL)
-	@Valid
-	Set<@Valid Order> orders;
-
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	Payment payment;
@@ -69,9 +61,6 @@ public class User {
 	@Valid
 	Set<@Valid Review> reviews;
 
-	// Seller Part
-	@OneToMany(cascade = CascadeType.ALL)
-	Set<Product> products;
 	@Column
 	boolean isActive;
 
@@ -89,10 +78,8 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
-		orders = new HashSet<Order>();
 		reviews = new HashSet<Review>();
 		isActive = false;
-		products = new HashSet<Product>();
 
 	}
 
@@ -160,18 +147,6 @@ public class User {
 		this.address = address;
 	}
 
-	public Set<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
-	}
-
-	public void addOrder(Order order) {
-		this.orders.add(order);
-	}
-
 	public Payment getPayment() {
 		return payment;
 	}
@@ -194,18 +169,6 @@ public class User {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
-	}
-
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
-	public void addProduct(Product product) {
-		products.add(product);
 	}
 
 }

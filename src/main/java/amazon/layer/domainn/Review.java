@@ -12,12 +12,12 @@ import javax.validation.constraints.NotEmpty;
 public class Review {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column(nullable=false)
+    @Column()
     @NotEmpty()
     private String comment;
-    @Column(nullable=false)
+    @Column()
     LocalDate creationDateTime;
-    @Column(nullable=false)
+    @Column()
     Boolean accepted;
     
     public Review(){}

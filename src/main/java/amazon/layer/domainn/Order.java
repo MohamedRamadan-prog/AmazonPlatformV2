@@ -12,13 +12,17 @@ import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 @Entity
@@ -43,9 +47,20 @@ public class Order {
 	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
 	private Address billingAddress;
 
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus; 
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@Valid
+	User seller;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@Valid
+	User byer;
+
 	public Order() {
 		this.orderLines = new HashSet<OrderLine>();
-
+		this.orderStatus = OrderStatus.PLACED;
 	}
 
 	@PostConstruct
@@ -91,6 +106,38 @@ public class Order {
 
 	public void setBillingAddress(Address billingAddress) {
 		this.billingAddress = billingAddress;
+	}
+
+	public User getSeller() {
+		return seller;
+	}
+
+	public void setSeller(User seller) {
+		this.seller = seller;
+	}
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public User getByer() {
+		return byer;
+	}
+
+	public void setByer(User byer) {
+		this.byer = byer;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 }
