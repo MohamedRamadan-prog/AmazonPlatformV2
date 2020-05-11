@@ -2,6 +2,7 @@ package amazon.layer.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -28,6 +29,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getAllProducts() {
 		return productRepository.findAll();
 
+	}
+
+	@Override
+	public Set<Product> getProductsByID(String username) {
+		return productRepository.findByUserName(username);
 	}
 
 	@Override

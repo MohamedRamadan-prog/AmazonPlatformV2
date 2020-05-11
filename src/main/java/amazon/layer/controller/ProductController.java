@@ -3,6 +3,7 @@ package amazon.layer.controller;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,9 @@ public class ProductController {
 
 	@RequestMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("products", productService.getAllProducts());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName = ((UserDetails) principal).getUsername();
+		model.addAttribute("sellerProducts", productService.getProductsByID(userName));
 		return "products";
 	}
 
