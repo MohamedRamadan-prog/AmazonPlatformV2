@@ -19,10 +19,8 @@
 <body>
 
 	<div class="container">
-
-		<h3>InActive Sellers</h3>
+		<h3>Sellers Pending Activation</h3>
 		<hr>
-
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -60,7 +58,9 @@
 			</tbody>
 		</table>
 
+		<form th:action="@{/home}">
+			<button type="submit" class="btn btn-primary btn-lg btn-block">Reviews Pending Activation</button>
+		</form>
 	</div>
-
 </body>
 </html>

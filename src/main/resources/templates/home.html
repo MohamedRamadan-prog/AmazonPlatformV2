@@ -15,7 +15,7 @@
 
 
 	<div sec:authorize="hasAuthority('ADMIN')">
-        <div th:include="adminHome"></div>
+        <div th:include="adminPindingReview"></div>
 	</div>
 
 	<div sec:authorize="hasAuthority('SELLER')">

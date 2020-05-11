@@ -21,11 +21,16 @@ public class OrderServiceImp implements OrderService {
 		Set<Order> orders = orderRepository.findOrderBySellerName(sellerEmail);
 		return orders;
 	}
-
-	@Override
-	public Optional<Order> getOrderById(Long orderId) {
-		// TODO Auto-generated method stub
-		return orderRepository.findById(orderId);
+	
+	public Order getOrderById(Long id)
+	{
+		Optional<Order> order = orderRepository.findById(id);
+		return order.get();
 	}
 
+	@Override
+	public void save(Order order) {
+		orderRepository.save(order);
+		
+	}
 }
