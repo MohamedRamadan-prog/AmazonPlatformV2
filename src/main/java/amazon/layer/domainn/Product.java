@@ -24,12 +24,12 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(nullable = false)
 	@NotEmpty()
 	private String name;
 	@Column
 	private String discription;
-	@Column(nullable = false)
+	//nullable =false was removed
+	@Column()
 	private Date creationDateTime;
 	@Column
 	private Integer quntityAvaliable;

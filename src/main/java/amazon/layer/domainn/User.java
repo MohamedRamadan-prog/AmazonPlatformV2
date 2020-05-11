@@ -25,20 +25,19 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(nullable = false)
-	@NotEmpty()
+	@Column
+	@NotEmpty
 	private String name;
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	@NotEmpty
 	@Email(message = "{errors.invalid_email}")
 	private String email;
-	@Column(nullable = false)
+	@Column
 	@NotEmpty
 	@Size(min = 4)
 	private String password;
@@ -57,7 +56,7 @@ public class User {
 	private List<Role> roles;
 
 	// Buyer Part
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,  mappedBy = "seller")
 	@Valid
 	Set<@Valid Order> orders;
 

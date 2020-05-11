@@ -12,13 +12,10 @@ public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(nullable = false)
 	@NotEmpty()
 	private String number;
-	@Column(nullable = false)
 	@NotEmpty()
 	private String csv;
-	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	paymentType payType;
 

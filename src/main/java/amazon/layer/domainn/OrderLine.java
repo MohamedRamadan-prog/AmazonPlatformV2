@@ -27,17 +27,17 @@ public class OrderLine {
 	@OneToOne(cascade = CascadeType.ALL)
 	@Valid
 	private Product product;
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
 	private Order order;
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
-	public OrderLine(int quantity, double price, User seller, Product product, OrderStatus orderStatus) {
+	public OrderLine(int quantity, double price, Product product, OrderStatus orderStatus) {
 		super();
 		this.quantity = quantity;
 		this.price = price;
-		this.seller = seller;
 		this.product = product;
 		this.orderStatus = orderStatus;
 	}
