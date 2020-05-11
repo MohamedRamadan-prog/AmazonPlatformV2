@@ -53,6 +53,9 @@ public class ProductController {
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public String processUpdateProduct(@RequestParam(value = "id", required = false) Long productId,
 			@ModelAttribute("product") ProductForm product) {
+		MultipartFile productImage = product.getProductImage();
+		storageService.saveImage(productImage, productId);
+
 		productService.update(product, productId);
 		return "redirect:/products/list";
 	}
@@ -66,7 +69,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
 	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,
-			BindingResult result, Model model, HttpServletRequest request) {
+			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "addProduct";

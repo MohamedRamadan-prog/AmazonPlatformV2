@@ -25,8 +25,7 @@
 		<p class="h4 mb-4">Update Product</p>
 
 		<form action="#" th:action="@{/products/updateProduct}"
-			th:object="${product}" method="POST"
-			enctype="multipart/form-data">
+			th:object="${product}" method="POST" enctype="multipart/form-data">
 
 			<!-- Add hidden form field to handle update -->
 
@@ -36,10 +35,10 @@
 				th:field="*{discription}" class="form-control mb-4 col-4"
 				placeholder="Discription"> <input type="text"
 				th:field="*{quntityAvaliable}" class="form-control mb-4 col-4"
-				placeholder="Units In Stock">
-
-
-									<input type="hidden" name="id" th:value="${product.id}" />
+				placeholder="Units In Stock"> <input name="productImage"
+				id="productImage" class="btn btn-outline-secondary mb-4 col-4"
+				type="file" /> <br> <br> <input type="hidden" name="id"
+				th:value="${product.id}" />
 
 			<button type="submit" class="btn btn-info col-2">Update</button>
 
