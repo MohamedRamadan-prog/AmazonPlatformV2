@@ -15,7 +15,6 @@ public class ResourceConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		System.out.println("heeeeeeeey " + ServletContext.getRealPath("/products"));
 		registry.addResourceHandler("/products").addResourceLocations(ServletContext.getRealPath("/products"));
 		registry.addResourceHandler("/users").addResourceLocations(ServletContext.getRealPath("/users"));
 	}
