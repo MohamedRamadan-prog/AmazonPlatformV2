@@ -123,8 +123,7 @@ public class AmazonApplication {
 		    
 		    Set<Order> orders = new HashSet<Order>();
 		    orders.add(order);
-		    seller2.setOrders(orders);
-			
+            orderRepository.save(order);			
 		    //------------------------------------------------------------
 			userReository.save(seller);
 	        userReository.save(seller2);

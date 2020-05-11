@@ -2,7 +2,6 @@ package amazon.layer.controller;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class ProductController {
 	}
 
 	@RequestMapping("/product")
-	public String getProductDetail(@RequestParam(value = "id", required = false) Long productId, Model model) {
+	public String getProductDetail(@RequestParam(value = "id", required = true) Long productId, Model model) {
 		Optional<Product> product = productService.getProductById(productId);
 		model.addAttribute("product", product.get());
 		return "product";
@@ -95,7 +94,7 @@ public class ProductController {
 	public String removeProduct(@RequestParam(value = "id", required = false) Long productId) {
 
 		boolean isDeleted = productService.deleteById(productId);
-//TODO
+		//TODO
 		return "redirect:/products/list";
 	}
 

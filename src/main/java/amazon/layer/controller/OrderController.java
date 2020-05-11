@@ -1,17 +1,13 @@
 package amazon.layer.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import amazon.layer.domainn.Order;
@@ -21,11 +17,10 @@ import amazon.layer.service.OrderService;
 @Controller
 @RequestMapping("orders")
 public class OrderController {
-	
+
 	@Autowired
 	OrderService orderService;
 
-	
 	@RequestMapping("/activeList")
 	public String ordersList(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -37,7 +32,7 @@ public class OrderController {
 			System.out.println(order.getTotalPrice());
 			System.out.println(order.getBillingAddress().getState());
 		}
-		model.addAttribute("orders",orders);
+		model.addAttribute("orders", orders);
 		return "sellerOrders";
 	}	
 	
@@ -51,5 +46,11 @@ public class OrderController {
 		orderService.save(order);
 		return "redirect:/orders/activeList";
 	}
-	
+
+	@RequestMapping("/order")
+	public String getOrderDetails(@RequestParam(value = "id", required = true) Long orderId, Model model) {
+		Order order = orderService.getOrderById(orderId);
+		model.addAttribute("order", order);
+		return "orderDetails";
+	}
 }

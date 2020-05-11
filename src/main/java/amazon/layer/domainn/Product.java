@@ -28,7 +28,7 @@ public class Product {
 	private String name;
 	@Column
 	private String discription;
-	//nullable =false was removed
+	// nullable =false was removed
 	@Column()
 	private Date creationDateTime;
 	@Column
@@ -37,7 +37,7 @@ public class Product {
 	private boolean isPurchasedBefore;
 	@Column
 	private double price;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@Valid
 	private User seller;
 	@OneToMany(cascade = CascadeType.ALL)
