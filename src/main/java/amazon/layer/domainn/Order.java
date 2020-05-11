@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 @Entity
@@ -47,8 +48,8 @@ public class Order {
 	private Address billingAddress;
 	
 	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;
-
+	private OrderStatus orderStatus; 
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
 	User seller;
@@ -120,6 +121,15 @@ public class Order {
 		Id = id;
 	}
 
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	
 	
 	
 }
