@@ -2,7 +2,6 @@ package amazon.layer.controller;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,20 +52,23 @@ public class ProductController {
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public String processUpdateProduct(@RequestParam(value = "id", required = false) Long productId,
 			@ModelAttribute("product") ProductForm product) {
+		MultipartFile productImage = product.getProductImage();
+		storageService.saveImage(productImage, productId);
+
 		productService.update(product, productId);
 		return "redirect:/products/list";
 	}
 
 	@RequestMapping("/product")
-	public String getProductDetail(@RequestParam(value = "id", required = false) Long productId, Model model) {
+	public String getProductDetail(@RequestParam(value = "id", required = true) Long productId, Model model) {
 		Optional<Product> product = productService.getProductById(productId);
 		model.addAttribute("product", product.get());
-		return "product";
+		return "orderDetails";
 	}
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
 	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,
-			BindingResult result, Model model, HttpServletRequest request) {
+			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "addProduct";

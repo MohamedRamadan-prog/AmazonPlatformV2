@@ -26,35 +26,21 @@
 		<h3>Product Details</h3>
 		<hr>
 
-		
+
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th>Product Name</th>
-					<th>Product Discription</th>
-					<th>Product Price</th>
-					<th>Product image</th>
+					<th>order status</th>
+					<th>order seller</th>
+
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr>
+					<td th:text="${order.orderStatus}" />
+					<td th:text="${order.seller.firstName}" />
 
-					<td th:text="${product.name}" />
-					<td th:text="${product.discription}" />
-					<td th:text="${product.price}" />
-					<td>
-						<div class="row">
-
-							<div class="col-small">
-								<img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
-<img th:src="@{'/users/' + ${product.id} + '.png'}" width="300" height="300"/>
-
-							</div>
-
-
-						</div>
-					</td>
 				</tr>
 			</tbody>
 		</table>

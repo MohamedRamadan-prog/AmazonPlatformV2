@@ -22,7 +22,7 @@
 
 		<h3>Orders</h3>
 		<hr>
-S
+
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -36,9 +36,9 @@ S
 
 					<td th:text="${order.Id}" />
 					<td th:text="${order.totalPrice}" />
+					<td>
 						
 						<div class="row">
-
 							<div class="col-small">
 								<!-- Add "update" button/link -->
 								<form action="#" th:action="@{/orders/updateProductForm}"

@@ -15,19 +15,7 @@
 
 
 	<div sec:authorize="hasAuthority('ADMIN')">
-
-		<h4>Admin Page</h4>
-
-		<form th:action="@{/review/getReviws}">
-			<input type="submit" name="Get Reviews" value="Get Pinding Reviews">
-		</form>
-		<form th:action="@{/seller/inActive_Sellers}">
-			<input type="submit" name="Get Reviews" value="Get InActive Sellers">
-		</form>
-
-		<form th:action="@{/products/list}">
-			<input type="submit" name="manage Products" value="Manage Products">
-		</form>
+        <div th:include="adminHome"></div>
 	</div>
 
 	<div sec:authorize="hasAuthority('SELLER')">
@@ -43,6 +31,12 @@
 
 	<div sec:authorize="hasAuthority('BUYER')">
 		<h4>Buyer Page</h4>
+		<div th:include="sellersHome"></div>
+	</div>
+
+	<div sec:authorize="hasAuthority('BUYER')">
+		<div th:include="buyerHome"></div>
+>>>>>>> bc193532ee7c5aa691ec7df5e77dd645d3c598e4
 	</div>
 
 </body>
