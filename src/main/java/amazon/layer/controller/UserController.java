@@ -24,7 +24,7 @@ public class UserController {
 
 	@RequestMapping(value = { "/", "/login" })
 	public String defaultlogin(Model model) {
-		return "login";
+		return "index";
 	}
 
 	@RequestMapping(value = "/home")
