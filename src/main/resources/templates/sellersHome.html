@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
     <link type="text/css" rel="stylesheet" href="/css/sellerHome.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -27,7 +27,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <img th:src="@{css/images/sellerHome1.jpg}" alt="Los Angeles" style="width:100%;height: 500px;">
+                <img th:src="@{../css/images/sellerHome1.jpg}" alt="Los Angeles" style="width:100%;height: 500px;">
                 <div class="carousel-caption">
                     <h3 style="color: black;">Shopping At Ease From Your Home!</h3>
                     <p style="color: black">Few clicks away from your dreams!</p>
@@ -35,7 +35,7 @@
             </div>
 
             <div class="item">
-                <img th:src="@{css/images/sellerhome2.jpg}" alt="Chicago" style="width:100%;height: 500px;">
+                <img th:src="@{../css/images/sellerhome2.jpg}" alt="Chicago" style="width:100%;height: 500px;">
                 <div class="carousel-caption">
                     <h3 style="color: black">Keeping Your Family Together</h3>
                     <p style="color: black">Shooping in our site is family friendly!</p>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="item">
-                <img th:src="@{css/images/sellerHome3.jpg}" alt="New york" style="width:100%;height: 500px;">
+                <img th:src="@{../css/images/sellerHome3.jpg}" alt="New york" style="width:100%;height: 500px;">
                 <div class="carousel-caption">
                     <h3 style="color: black;">We Keep Your Data Safe!</h3>
                     <p style="color: black;">We insure your data to be safe and private!</p>
@@ -78,37 +78,19 @@
         <a href="#" class="btn btn-primary">Submit</a>
       </div>   -->
     <div class="row">
-        <div class="col-md-3 col-sm-6">
+        <!-- <div class="col-md-3 col-sm-6" th:each="product : ${sellerProducts}"> -->
+        <div th:each="product : ${sellerProducts}" class="col-md-3 col-sm-6">
+                <form th:action="@{/products/updateProductForm}" method="GET">
+                 <a onclick="this.parentNode.submit()">
+                <input type="hidden" name="id" th:value="${product.id}" />
                 <div class="card card-block">
-                <h4 class="card-title text-right"><i class="material-icons">settings</i></h4>
-                <img src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" alt="Photo of sunset">
-                <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p>
-            </div>
-    </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card card-block">
-                <h4 class="card-title text-right"><i class="material-icons">settings</i></h4>
-                <img src="https://static.pexels.com/photos/7357/startup-photos.jpg" alt="Photo of sunset">
-                <h5 class="card-title  mt-3 mb-3">ProVyuh</h5>
-                <p class="card-text">This is a company that builds websites, web .</p>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card card-block">
-                <h4 class="card-title text-right"><i class="material-icons">settings</i></h4>
-                <img src="https://static.pexels.com/photos/262550/pexels-photo-262550.jpeg" alt="Photo of sunset">
-                <h5 class="card-title  mt-3 mb-3">ProVyuh</h5>
-                <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card card-block">
-                <h4 class="card-title text-right"><i class="material-icons">settings</i></h4>
-                <img src="https://static.pexels.com/photos/326424/pexels-photo-326424.jpeg" alt="Photo of sunset">
-                <h5 class="card-title  mt-3 mb-3">ProVyuh</h5>
-                <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p>
-            </div>
+                <h4 class="card-title text-right"><i class="material-icons">New</i></h4>
+                <img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
+                <h5 class="card-title mt-3 mb-3" th:text="${product.name}"> </h5>
+                <p class="card-text" th:text="${product.discription}"></p>
+               </div>
+                </a>
+                </form>
         </div>
     </div>
 </div>

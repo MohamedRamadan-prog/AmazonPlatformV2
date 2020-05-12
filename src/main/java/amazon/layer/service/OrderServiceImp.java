@@ -1,23 +1,22 @@
 package amazon.layer.service;
 
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import amazon.layer.domainn.Product;
-import amazon.layer.domainn.User;
 import amazon.layer.domainn.Address;
 import amazon.layer.domainn.Order;
 import amazon.layer.domainn.OrderLine;
+import amazon.layer.domainn.OrderStatus;
 import amazon.layer.domainn.Payment;
+import amazon.layer.domainn.Product;
+import amazon.layer.domainn.User;
 import amazon.layer.repository.OrderRepository;
 import amazon.layer.repository.UserRepository;
 
@@ -35,9 +34,8 @@ public class OrderServiceImp implements OrderService {
 		Set<Order> orders = orderRepository.findOrderBySellerName(sellerEmail);
 		return orders;
 	}
-	
-	public Order getOrderById(Long id)
-	{
+
+	public Order getOrderById(Long id) {
 		Optional<Order> order = orderRepository.findById(id);
 		return order.get();
 	}
@@ -96,5 +94,26 @@ public class OrderServiceImp implements OrderService {
 	
 			orderRepository.save(order);
 		}
+	}
+
+	@Override
+	public List<Order> getOrdersOfBuyer(String buyerEmail) {
+
+		return orderRepository.findOrderByBuyerName(buyerEmail);
+	}
+
+	@Override
+	public boolean cancelOrder(Long id) {
+
+		Order order = orderRepository.findById(id).get();
+
+		if (order.getOrderStatus() != OrderStatus.PLACED)
+			return false;
+
+		order.setOrderStatus(OrderStatus.CANCELLED);
+
+		orderRepository.save(order);
+
+		return true;
 	}
 }

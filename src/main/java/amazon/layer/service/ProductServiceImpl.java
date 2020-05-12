@@ -77,8 +77,8 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getSellerProducts(String sellerEmail) {
 
 		User seller = userRepository.findByEmail(sellerEmail);
-		productRepository.findBySeller(seller);
-		return null;
+
+		return productRepository.findBySeller(seller);
 	}
 
 }

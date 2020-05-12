@@ -35,18 +35,16 @@ public class OrderController {
 		String Seller_email = authentication.getName();
 		System.out.println(Seller_email);
 		Set<Order> orders = orderService.getOrdersOfSeller(Seller_email);
-		for(Order order : orders)
-		{
+		for (Order order : orders) {
 			System.out.println(order.getTotalPrice());
 			System.out.println(order.getBillingAddress().getState());
 		}
 		model.addAttribute("orders", orders);
 		return "sellerOrders";
-	}	
-	
+	}
+
 	@RequestMapping(value = "/updateOrderStatus")
-	public String updateOrderStaus(@RequestParam("status")String status , @RequestParam("id") Long id)
-	{
+	public String updateOrderStaus(@RequestParam("status") String status, @RequestParam("id") Long id) {
 		System.out.println(id);
 		System.out.println(status);
 		Order order = orderService.getOrderById(id);
@@ -110,7 +108,7 @@ public class OrderController {
 		Payment payment = (Payment) session.getAttribute("addedpayment");
 		Address shipAddress = (Address) session.getAttribute("addedshippingAddress");
 		Address billAddress = (Address) session.getAttribute("addedBillingAddress");
-		Hashtable cart = (Hashtable) session.getAttribute("shoppingCart");
+		Hashtable<Long, Integer> cart = (Hashtable<Long, Integer>) session.getAttribute("shoppingCart");
 		String username = authentication.getName();
 		orderService.placeOrder( payment, shipAddress, billAddress, cart , username );
 		
@@ -119,4 +117,13 @@ public class OrderController {
 	
 	
 	
+
+	@RequestMapping(value = "/cancelOrder")
+	public String cancelOrder(@RequestParam("orderId") Long id) {
+
+		boolean isCancelled = orderService.cancelOrder(id);
+
+		// TODO handle if order can not be cancelled
+		return "redirect:/orders/activeList";
+	}
 }
