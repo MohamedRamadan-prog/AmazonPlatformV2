@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<title>Amazon</title>
+</head>
+
+<body>
+
+
+	Heeeeeeey
+
+	<div class="row">
+
+		<div class="col-small">
+			<!-- Add "Activate" button/link -->
+			<form action="#" th:action="@{/buyer/followSeller}" method="POST">
+
+				<input type="hidden" name="sellerEmail" value="seller@gmail.com" />
+				<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">follow
+					Seller 1</button>
+
+			</form>
+		</div>
+	</div>
+
+	<br>
+	<br>
+
+
+	<div class="row">
+
+		<div class="col-small">
+			<!-- Add "Activate" button/link -->
+			<form action="#" th:action="@{/buyer/followSeller}" method="POST">
+
+				<input type="hidden" name="sellerEmail" value="seller2@gmail.com" />
+				<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">follow
+					Seller 2</button>
+
+			</form>
+		</div>
+	</div>
+
+	<br>
+	<br>
+
+	<div class="row">
+
+		<div class="col-small">
+			<!-- Add "Activate" button/link -->
+			<form action="#" th:action="@{/buyer/unfollowSeller}" method="POST">
+
+				<input type="hidden" name="sellerEmail" value="seller@gmail.com" />
+				<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">unfollow
+					Seller 1</button>
+
+			</form>
+		</div>
+	</div>
+</body>
+</html>

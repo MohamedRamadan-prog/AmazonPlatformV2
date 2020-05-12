@@ -19,10 +19,8 @@ crossorigin="anonymous">
 <body>
 
 	<div class="container">
-
 		<h3>In Active Reviews</h3>
 		<hr>
-
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -55,7 +53,9 @@ crossorigin="anonymous">
 			</tbody>
 		</table>
 
+		<form th:action="@{/seller/inActive_Sellers}">
+			<button type="submit" class="btn btn-primary btn-lg btn-block">Sellers Pending Activation</button>
+		</form>
 	</div>
-
 </body>
 </html>

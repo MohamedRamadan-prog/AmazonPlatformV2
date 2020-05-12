@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -60,6 +61,10 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
 	@Valid
 	Set<@Valid Review> reviews;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "buyer_following", joinColumns = @JoinColumn(name = "BUYER_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "SELLER_ID", referencedColumnName = "id"))
+	private Set<User> buyerFollowing;
 
 	@Column
 	boolean isActive;
@@ -169,6 +174,15 @@ public class User {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+
+	public Set<User> getBuyerFollowing() {
+		return buyerFollowing;
+	}
+
+	public void setBuyerFollowing(Set<User> buyerFollowing) {
+		this.buyerFollowing = buyerFollowing;
 	}
 
 }

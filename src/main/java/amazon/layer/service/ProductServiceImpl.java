@@ -73,4 +73,12 @@ public class ProductServiceImpl implements ProductService {
 		return false;
 	}
 
+	@Override
+	public List<Product> getSellerProducts(String sellerEmail) {
+
+		User seller = userRepository.findByEmail(sellerEmail);
+		productRepository.findBySeller(seller);
+		return null;
+	}
+
 }

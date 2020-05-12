@@ -15,22 +15,10 @@
 
 
 	<div sec:authorize="hasAuthority('ADMIN')">
-        <div th:include="adminHome"></div>
+        <div th:include="adminPindingReview"></div>
 	</div>
 
 	<div sec:authorize="hasAuthority('SELLER')">
-		<h4>Seller Page</h4>
-			Logged in user: <span sec:authentication = name></span>
-			Roles: <span sec:authentication = principal.authorities></span>
-			
-		
-		<form th:action="@{/orders/activeList}">
-			<input type="submit" name="OrdersList" value="Get Acrive Order List">
-		</form>
-	</div>
-
-	<div sec:authorize="hasAuthority('BUYER')">
-		<h4>Buyer Page</h4>
 		<div th:include="sellersHome"></div>
 	</div>
 
