@@ -1,5 +1,6 @@
 package amazon.layer.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import amazon.layer.domainn.Order;
 import amazon.layer.domainn.User;
 import amazon.layer.service.BuyerService;
+import amazon.layer.service.OrderService;
 
 @Controller
 @RequestMapping({ "/buyer" })
@@ -20,6 +23,9 @@ public class BuyerController {
 
 	@Autowired
 	private BuyerService buyerService;
+
+	@Autowired
+	private OrderService orderService;
 
 	@RequestMapping(value = "/success")
 	public String showSellerProducts() {
@@ -53,6 +59,16 @@ public class BuyerController {
 		String buyerEmail = ((UserDetails) principal).getUsername();
 		Set<User> sellers = buyerService.getBuyerFlowingList(buyerEmail);
 		model.addAttribute("sellers", sellers);
+		return "testFollowUnfollow.html";
+	}
+
+	@RequestMapping(value = "/ordersHistory", method = RequestMethod.GET)
+	public String getMyOrdersHistory(Model model) {
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String buyerEmail = ((UserDetails) principal).getUsername();
+		List<Order> orders = orderService.getOrdersOfBuyer(buyerEmail);
+		model.addAttribute("orders", orders);
 		return "testFollowUnfollow.html";
 	}
 }

@@ -61,24 +61,37 @@
         </a>
     </div>
 </div>
-<form th:action="@{/seller/sellerOrders}">
-    <input type ="submit" name="Get Orders" value="Show orders">
-</form>
-<form th:action="@{/seller/sellerProducts}">
-    <input type ="submit" name="Get Products" value="Show Seller's Products">
-</form>
-<form th:action="@{/products/addProduct}">
-    <input type ="submit" name="Get create new product page" value="Create New Product">
-</form>
+<div class="jumbotron">
+    <div class="row w-100">
+        <div style="margin-left:300px;" class="col-md-3">
+            <form th:action="@{/seller/sellerOrders}">
+                <a href="#" onclick="this.parentNode.submit()">
+            <div class="card border-success mx-sm-1 p-3">
+                <div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-eye" aria-hidden="true"></span></div>
+                <div class="text-success text-center mt-3"><h2>Orders</h2></div>
+                <div class="text-success text-center mt-2"><h1>0</h1></div>
+            </div>
+                </a>
+            </form>
+        </div>
 
+        <div class="col-md-3">
+            <form th:action="@{/products/addProduct}">
+                <a href="#" onclick="this.parentNode.submit()">
+            <div class="card border-warning mx-sm-1 p-3">
+                <div class="card border-warning shadow text-warning p-3 my-card" ><span class="fa fa-inbox" aria-hidden="true"></span></div>
+                <div class="text-warning text-center mt-3"><h2>Create New Product</h2></div>
+                <div class="text-warning text-center mt-2">
+                    <img style="height: 80px; width: 80px;" th:src="@{../css/images/createIcon.png}">
+                </div>
+            </div>
+            </a>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="container mt-2">
-    <!--   <div class="card card-block mb-2">
-        <h4 class="card-title">Card 1</h4>
-        <p class="card-text">Welcom to bootstrap card styles</p>
-        <a href="#" class="btn btn-primary">Submit</a>
-      </div>   -->
     <div class="row">
-        <!-- <div class="col-md-3 col-sm-6" th:each="product : ${sellerProducts}"> -->
         <div th:each="product : ${sellerProducts}" class="col-md-3 col-sm-6">
             <form th:action="@{/products/removeProduct}" method="POST">
                 <input type="hidden" name="id" th:value="${product.id}" />
@@ -93,12 +106,11 @@
                 <img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
                 <h5 class="card-title mt-3 mb-3" th:text="${product.name}"> </h5>
                 <p class="card-text" th:text="${product.discription}"></p>
-               </div>
                 </a>
                </form>
+                </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

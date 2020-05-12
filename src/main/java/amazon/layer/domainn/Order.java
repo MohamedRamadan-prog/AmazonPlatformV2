@@ -56,7 +56,7 @@ public class Order {
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
-	User byer;
+	User buyer;
 
 	public Order() {
 		this.orderLines = new HashSet<OrderLine>();
@@ -124,12 +124,12 @@ public class Order {
 		Id = id;
 	}
 
-	public User getByer() {
-		return byer;
+	public User getBuyer() {
+		return buyer;
 	}
 
-	public void setByer(User byer) {
-		this.byer = byer;
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
 	}
 
 	public OrderStatus getOrderStatus() {
