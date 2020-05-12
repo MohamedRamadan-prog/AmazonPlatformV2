@@ -12,6 +12,8 @@ public interface ProductService {
 
 	List<Product> getAllProducts();
 
+	List<Product> getSellerProducts(String sellerEmail);
+
 	Product saveOrUpdate(@Valid ProductForm newProduct, String sellerEmail);
 
 	Optional<Product> getProductById(Long productId);

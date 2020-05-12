@@ -37,6 +37,12 @@ public class ProductController {
 		return "products";
 	}
 
+	@RequestMapping("/getSellersProduct")
+	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
+		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
+		return "sellersHome";
+	}
+
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct) {
 		return "addProduct";
@@ -94,7 +100,7 @@ public class ProductController {
 	public String removeProduct(@RequestParam(value = "id", required = false) Long productId) {
 
 		boolean isDeleted = productService.deleteById(productId);
-		//TODO
+		// TODO
 		return "redirect:/products/list";
 	}
 
