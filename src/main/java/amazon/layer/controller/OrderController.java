@@ -114,9 +114,6 @@ public class OrderController {
 		
 		return "ConfirmPage";
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/cancelOrder")
 	public String cancelOrder(@RequestParam("orderId") Long id) {
