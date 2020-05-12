@@ -50,7 +50,7 @@ public class UserController {
 		    return "redirect:/products/getSellersProduct";
 		}
 		else
-			return "home";
+			return "redirect:/products/list";
 	}
 
 	@RequestMapping(value = "/signup")
