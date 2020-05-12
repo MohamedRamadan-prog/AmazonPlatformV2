@@ -9,4 +9,5 @@ public interface ReviewService {
 
 	public Set<Review> getReviews();
 	public boolean setReviewStatus(Long id);
+	public void addReview(String comment, Long productId);
 }
