@@ -1,21 +1,29 @@
 package amazon.layer.controller;
 
+import java.util.Hashtable;
 import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import amazon.layer.domainn.Address;
 import amazon.layer.domainn.Order;
 import amazon.layer.domainn.OrderStatus;
+import amazon.layer.domainn.Payment;
 import amazon.layer.service.OrderService;
 
 @Controller
 @RequestMapping("orders")
+@SessionAttributes({"addedshippingAddress","addedBillingAddress","addedpayment","currentOrder","shoppingCart"})
 public class OrderController {
 
 	@Autowired
@@ -53,4 +61,62 @@ public class OrderController {
 		model.addAttribute("order", order);
 		return "orderDetails";
 	}
+	
+	@RequestMapping("/CreateShippingAddress")
+	public String CreateShippingAddress(@ModelAttribute("ShippingAddress") Address shippingAdrress)
+	{
+		return "OrderShippingAddress";
+		
+	}
+	
+	@RequestMapping("/SetShippingAddress")
+	public String SetShippingAddress(@ModelAttribute("ShippingAddress") Address shippingAdrress ,HttpSession session)
+	{
+		session.setAttribute("addedshippingAddress", shippingAdrress);
+		Address  shAddress = (Address) session.getAttribute("addedshippingAddress");
+		System.out.println(shAddress.getCity());
+
+		return "redirect:/orders/CreateBillingAddress";
+	}
+	
+	@RequestMapping("/CreateBillingAddress")
+	public String CreateBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress)
+	{
+		return "OrderBillingAddress";
+		
+	}
+	
+	@RequestMapping("/setBillingAddress")
+	public String setBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress,HttpSession session)
+	{
+		
+		session.setAttribute("addedBillingAddress", billingAddress);
+		Address  biAddress = (Address) session.getAttribute("addedBillingAddress");
+		System.out.println(biAddress.getCity());
+		
+		return "redirect:/orders/confirmOrder";
+	}
+	
+	
+	@RequestMapping("/confirmOrder")
+	public String confirmOrder(HttpSession session,Model model)
+	{	
+		return "ConfirmPage";
+	}
+	
+	@RequestMapping("/placeOrder")
+	public String placeOrder(HttpSession session,Authentication authentication)
+	{	
+		Payment payment = (Payment) session.getAttribute("addedpayment");
+		Address shipAddress = (Address) session.getAttribute("addedshippingAddress");
+		Address billAddress = (Address) session.getAttribute("addedBillingAddress");
+		Hashtable cart = (Hashtable) session.getAttribute("shoppingCart");
+		String username = authentication.getName();
+		orderService.placeOrder( payment, shipAddress, billAddress, cart , username );
+		
+		return "ConfirmPage";
+	}
+	
+	
+	
 }

@@ -44,7 +44,11 @@ public class UserController {
 		else if(isSeller){
 			String email = authentication.getName();
 			rdr.addAttribute("email", email);
+			
+			session.setAttribute("shoppingCart", new Hashtable<Long,Integer>());
+			
 		    return "redirect:/products/getSellersProduct";
+		    
 		}
 		else
 		{

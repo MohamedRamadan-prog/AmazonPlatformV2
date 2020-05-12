@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+crossorigin="anonymous">
+
+<title>Amazon</title>
+</head>
+
+<body>
+
+
+	<div class="container">
+		<h3>Confirm Your Payment</h3>
+		<hr>
+                <form action="#" th:action="@{/payments/setPayment}"
+					th:object="${payment}" method="GET">
+					Card Number:
+					<br>
+					<input type="text"  th:field="*{number}" placeholder="Number" />
+					<br>
+					Card CSV:
+					<br>
+					<input type="text"  th:field="*{csv}" placeholder="csv" />
+					<br>
+					Select Visa Type:
+					 <br>
+							<select name ="payMethod" th:field="*{payType}" >
+							    <option th:each="payMethod : ${T(amazon.layer.domainn.PaymentType).values()}"
+							    th:value="${payMethod}" th:text="${payMethod}"></option>
+						    </select>
+					<br>
+					<br>		
+					<button type="submit" class="btn btn-info btn-sm ml-3 mr-1"onclick="if (!(confirm('Are you Sure of Your Payment info ?'))) return false">Next</button>
+				</form>
+	</div>
+
+
+</body>
+</html>

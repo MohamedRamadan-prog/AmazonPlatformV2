@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import amazon.layer.domainn.Order;
 import amazon.layer.domainn.Product;
 import amazon.layer.service.ProductService;
 
@@ -65,6 +66,12 @@ public class ShoppingCartController{
 			}				    
 			session.setAttribute("shoppingCart", cart);
 		return "redirect:/cart/getCartProducts";
+	}
+	
+	@RequestMapping("/checkout")
+	public String checkOut(Model model)
+	{
+		return "redirect:/payments/createPayment";
 	}
 
 

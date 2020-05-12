@@ -24,22 +24,20 @@ public class OrderLine {
 	@OneToOne(cascade = CascadeType.ALL)
 	@Valid
 	private User seller;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@Valid
 	private Product product;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
 	private Order order;
-	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;
+	
 
-	public OrderLine(int quantity, double price, Product product, OrderStatus orderStatus) {
+	public OrderLine(int quantity, double price, Product product) {
 		super();
 		this.quantity = quantity;
 		this.price = price;
 		this.product = product;
-		this.orderStatus = orderStatus;
 	}
 
 	public int getQuantity() {
@@ -82,12 +80,5 @@ public class OrderLine {
 		this.order = order;
 	}
 
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
-	}
 
 }

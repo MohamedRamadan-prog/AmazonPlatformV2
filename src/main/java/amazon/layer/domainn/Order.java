@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -40,10 +41,10 @@ public class Order {
 	@Valid
 	private Set<@Valid OrderLine> orderLines;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
 	private Address shippingAddress;
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
 	private Address billingAddress;
 
@@ -56,7 +57,7 @@ public class Order {
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
-	User byer;
+	User buyer;
 
 	public Order() {
 		this.orderLines = new HashSet<OrderLine>();
@@ -124,12 +125,12 @@ public class Order {
 		Id = id;
 	}
 
-	public User getByer() {
-		return byer;
+	public User getBuyer() {
+		return buyer;
 	}
 
-	public void setByer(User byer) {
-		this.byer = byer;
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
 	}
 
 	public OrderStatus getOrderStatus() {
