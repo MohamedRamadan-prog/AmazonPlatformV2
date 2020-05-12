@@ -136,5 +136,14 @@ public class Product {
 	public void setSeller(User seller) {
 		this.seller = seller;
 	}
+	
+	@Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89  * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 89  * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+
 
 }
