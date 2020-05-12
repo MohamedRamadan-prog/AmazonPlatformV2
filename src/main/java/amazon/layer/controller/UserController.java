@@ -1,6 +1,7 @@
 package amazon.layer.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sound.midi.SysexMessage;
 import javax.validation.Valid;
 
 import amazon.layer.repository.RoleRepository;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import amazon.layer.domainn.User;
 import amazon.layer.dto.UserForm;
 import amazon.layer.service.UserService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
 
@@ -36,11 +38,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/home")
-	public String home(Model model, Authentication authentication) {
+	public String home(Model model, Authentication authentication, RedirectAttributes rdr) {
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
+		boolean isSeller = authorities.contains(new SimpleGrantedAuthority("SELLER"));
 		if (isAdmin)
 			return "redirect:review/getReviws";
+		else if(isSeller){
+			String email = authentication.getName();
+			rdr.addAttribute("email", email);
+		    return "redirect:/products/getSellersProduct";
+		}
 		else
 			return "home";
 	}
