@@ -27,18 +27,16 @@ public class OrderController {
 		String Seller_email = authentication.getName();
 		System.out.println(Seller_email);
 		Set<Order> orders = orderService.getOrdersOfSeller(Seller_email);
-		for(Order order : orders)
-		{
+		for (Order order : orders) {
 			System.out.println(order.getTotalPrice());
 			System.out.println(order.getBillingAddress().getState());
 		}
 		model.addAttribute("orders", orders);
 		return "sellerOrders";
-	}	
-	
+	}
+
 	@RequestMapping(value = "/updateOrderStatus")
-	public String updateOrderStaus(@RequestParam("status")String status , @RequestParam("id") Long id)
-	{
+	public String updateOrderStaus(@RequestParam("status") String status, @RequestParam("id") Long id) {
 		System.out.println(id);
 		System.out.println(status);
 		Order order = orderService.getOrderById(id);
@@ -52,5 +50,14 @@ public class OrderController {
 		Order order = orderService.getOrderById(orderId);
 		model.addAttribute("order", order);
 		return "orderDetails";
+	}
+
+	@RequestMapping(value = "/cancelOrder")
+	public String cancelOrder(@RequestParam("orderId") Long id) {
+
+		boolean isCancelled = orderService.cancelOrder(id);
+
+		// TODO handle if order can not be cancelled
+		return "redirect:/orders/activeList";
 	}
 }
