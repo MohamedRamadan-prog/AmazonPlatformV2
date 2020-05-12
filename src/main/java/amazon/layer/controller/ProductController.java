@@ -62,7 +62,7 @@ public class ProductController {
 		storageService.saveImage(productImage, productId);
 
 		productService.update(product, productId);
-		return "redirect:/products/list";
+		return "redirect:/home";
 	}
 
 	@RequestMapping("/product")
@@ -93,7 +93,7 @@ public class ProductController {
 		Product product = productService.saveOrUpdate(newProduct, ((UserDetails) principal).getUsername());
 		storageService.saveImage(productImage, product.getId());
 
-		return "redirect:/products/list";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
@@ -101,7 +101,7 @@ public class ProductController {
 
 		boolean isDeleted = productService.deleteById(productId);
 		// TODO
-		return "redirect:/products/list";
+		return "redirect:/home";
 	}
 
 }
