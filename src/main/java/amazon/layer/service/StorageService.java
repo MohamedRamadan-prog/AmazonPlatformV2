@@ -1,4 +1,4 @@
-package amazon.layer.controller;
+package amazon.layer.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
