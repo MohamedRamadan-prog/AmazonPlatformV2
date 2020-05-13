@@ -76,7 +76,7 @@ public class ProductController {
 	public String getProductDetail(@RequestParam(value = "id", required = true) Long productId, Model model) {
 		Optional<Product> product = productService.getProductById(productId);
 		model.addAttribute("product", product.get());
-		return "product";
+		return "productDetails";
 	}
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
