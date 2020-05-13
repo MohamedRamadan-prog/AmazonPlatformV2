@@ -39,7 +39,7 @@ public class BuyerController {
 		String buyerEmail = ((UserDetails) principal).getUsername();
 		buyerService.followSeller(buyerEmail, sellerEmail);
 
-		return "redirect:/buyer/success";
+		return "forward:/products/product";
 	}
 
 	@RequestMapping(value = "/unfollowSeller", method = RequestMethod.POST)

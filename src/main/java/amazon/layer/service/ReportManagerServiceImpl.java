@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -24,11 +26,14 @@ public class ReportManagerServiceImpl implements ReportManagerService {
 
 	@Autowired
 	private OrderRepository orderRepo;
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	@Override
 	public void generatePdfInvoice(Long orderId) throws FileNotFoundException, JRException {
 
-		String path = "classpath:";
+		String path = servletContext.getRealPath("invoices/");
 
 		Order order = orderRepo.findById(orderId).get();
 		// load file and compile it
@@ -47,7 +52,7 @@ public class ReportManagerServiceImpl implements ReportManagerService {
 
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
-		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\invoice.pdf");
+		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "/invoice.pdf");
 
 	}
 

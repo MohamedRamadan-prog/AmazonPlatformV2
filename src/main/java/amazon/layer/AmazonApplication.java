@@ -117,6 +117,11 @@ public class AmazonApplication {
 	private void createProductImagesFolder() {
 		File file = new File (servletContext.getRealPath("/")+"/products");
 		file.mkdir();
+		System.out.println(servletContext.getRealPath("/")+"/products");
+
+		System.out.println(servletContext.getRealPath("/")+"/invoices");
+		 file = new File (servletContext.getRealPath("/")+"/invoices");
+		file.mkdir();
 		 file = new File (servletContext.getRealPath("/")+"/users");
 		file.mkdir();
 		System.out.println(file.getPath());

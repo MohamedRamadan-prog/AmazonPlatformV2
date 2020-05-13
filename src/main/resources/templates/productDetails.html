@@ -36,6 +36,8 @@
 					</h3>
 					<form th:action="@{/buyer/followSeller}" method="POST">
 						<input type="hidden" name="sellerEmail" th:value="${product.seller.email}">
+						<input type="hidden" name="id" th:value="${product.id}">
+						
 						<a class="glyphicon glyphicon-plus" onclick="this.parentNode.submit()">
                             Follow Seller
 						</a>
@@ -100,7 +102,7 @@
 		</div><!-- /col-sm-1 -->
 
 		<div th:each="review : ${product.reviews}" class="col-sm-5">
-			<div class="panel panel-default">
+			<div class="panel panel-default" th:if="${review.accepted}">
 				<div class="panel-heading">
 					<strong th:text="${review.id}"></strong> <span class="text-muted" th:text="${review.creationDateTime}"></span>
 				</div>
