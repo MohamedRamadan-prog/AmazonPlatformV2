@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import amazon.layer.domainn.Product;
 import amazon.layer.dto.ProductForm;
+import amazon.layer.service.BuyerService;
 import amazon.layer.service.ProductService;
 import amazon.layer.service.StorageService;
 
@@ -28,13 +30,19 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
 
 	@Autowired
 	private StorageService storageService;
 
+	@Autowired
+	private BuyerService buyerService;
+	
 	@RequestMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
+		String username = authentication.getName();
+		model.addAttribute("followingSellers",buyerService.getBuyerFlowingList(username));
 		return "buyerHome";
 	}
 
