@@ -48,30 +48,33 @@ public class OrderServiceImp implements OrderService {
 	public void placeOrder(Payment payment,Address shipAddress,Address billAddress,Hashtable cart,String username )
 	{	
 		Set<Product> products = cart.keySet();
-		Hashtable<Long , List<OrderLine>> listOfSeller = new Hashtable<>();
+		Hashtable<Integer , List<OrderLine>> listOfSeller = new Hashtable<>();
 		
 		for(Product product :products)
 		{
 			int quantity = (int)cart.get(product);
 			OrderLine orderline = new OrderLine(quantity,(product.getPrice()*quantity),product);
-			
-			if(listOfSeller.contains(product.getSeller().getId()))
+			System.out.println(orderline.getProduct().getName());
+
+			if(listOfSeller.containsKey(product.getSeller().getId().intValue()))
 			{
-				     List<OrderLine> orderlines = listOfSeller.get(product.getSeller().getId());
-				     orderlines.add(orderline);
-				     listOfSeller.put(product.getSeller().getId(),orderlines);
+				List<OrderLine> orderlines = (List<OrderLine>) listOfSeller.get(product.getSeller().getId().intValue());
+				orderlines.add(orderline);
+				listOfSeller.put(product.getSeller().getId().intValue() , orderlines );   
+				    System.out.println("inside if");
 			}else
 				{
 					List<OrderLine> orderlines = new ArrayList<OrderLine>();
 					orderlines.add(orderline);
-					listOfSeller.put(product.getSeller().getId(),orderlines);
+					listOfSeller.put(product.getSeller().getId().intValue() ,orderlines);
+					System.out.println(product.getSeller().getId().intValue() );
 				}
 		
 		}
 		
 		
-		Set<Long> sellerId = listOfSeller.keySet();
-		for(Long id : sellerId)
+		Set<Integer> sellerId = listOfSeller.keySet();
+		for(Integer id : sellerId)
 		{
 			Order order = new Order();
 			long orderPerPrice = 0 ;
@@ -81,12 +84,13 @@ public class OrderServiceImp implements OrderService {
 				{
 						order.addOrderLine(orderline);
 						orderPerPrice += orderline.getPrice();
+						System.out.println(orderline.getProduct().getName());
 				}
 			order.setTotalPrice(orderPerPrice);
 			order.setBillingAddress(billAddress);
 			order.setShippingAddress(shipAddress);
 			
-			User seller = userRepository.findById(id).get();
+			User seller = userRepository.findById(id.longValue()).get();
 			User buyer  = userRepository.findByEmail(username);
 			
 			order.setSeller(seller);
