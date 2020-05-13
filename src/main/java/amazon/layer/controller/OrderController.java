@@ -120,7 +120,7 @@ public class OrderController {
 		boolean isCancelled = orderService.cancelOrder(id);
 
 		// TODO handle if order can not be cancelled
-		return "redirect:/orders/activeList";
+		return "redirect:/buyer/orderHistory";
 	}
 
 	@RequestMapping(value = "/generateInvoice")

@@ -69,6 +69,6 @@ public class BuyerController {
 		String buyerEmail = ((UserDetails) principal).getUsername();
 		List<Order> orders = orderService.getOrdersOfBuyer(buyerEmail);
 		model.addAttribute("orders", orders);
-		return "testFollowUnfollow.html";
+		return "buyerOrderHistory";
 	}
 }

@@ -35,7 +35,13 @@ public class ProductController {
 	@RequestMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
-		return /*"sellersHome"*/"products";
+		return "buyerHome";
+	}
+
+	@RequestMapping("/productlist")
+	public String productList(Model model) {
+		model.addAttribute("products", productService.getAllProducts());
+		return "products";
 	}
 
 	@RequestMapping("/getSellersProduct")

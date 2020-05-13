@@ -2,22 +2,109 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/sellerHome.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Role visualization</title>
 
     <head>
         <meta charset="ISO-8859-1">
-        <title>Admins Page</title>
+        <title>Amazon Seller</title>
     </head>
 <body>
+<div class="container">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
 
-<form th:action="@{/review/getReviws}">
-    <input type ="submit" name="Get Reviews" value="Get Pinding Reviews">
-</form>
-<form th:action="@{/seller/inActive_Sellers}">
-    <input type ="submit" name="Get Reviews" value="Get InActive Sellers">
-</form>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img th:src="@{../css/images/sellerHome1.jpg}" alt="Los Angeles" style="width:100%;height: 500px;">
+                <div class="carousel-caption">
+                    <h3 style="color: black;">Shopping At Ease From Your Home!</h3>
+                    <p style="color: black">Few clicks away from your dreams!</p>
+                </div>
+            </div>
 
+            <div class="item">
+                <img th:src="@{../css/images/sellerhome2.jpg}" alt="Chicago" style="width:100%;height: 500px;">
+                <div class="carousel-caption">
+                    <h3 style="color: black">Keeping Your Family Together</h3>
+                    <p style="color: black">Shooping in our site is family friendly!</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <img th:src="@{../css/images/sellerHome3.jpg}" alt="New york" style="width:100%;height: 500px;">
+                <div class="carousel-caption">
+                    <h3 style="color: black;">We Keep Your Data Safe!</h3>
+                    <p style="color: black;">We insure your data to be safe and private!</p>
+                </div>
+            </div>
+        </div>
+
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="row w-100">
+        <div style="margin-left:300px;" class="col-md-3">
+            <form th:action="@{/buyer/ordersHistory}">
+                <a href="#" onclick="this.parentNode.submit()">
+                    <div class="card border-success mx-sm-1 p-3">
+                        <div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-eye" aria-hidden="true"></span></div>
+                        <div class="text-success text-center mt-3"><h2>Orders</h2></div>
+                        <div class="text-success text-center mt-2"><h1>0</h1></div>
+                    </div>
+                </a>
+            </form>
+        </div>
+
+        <div class="col-md-3">
+            <form th:action="@{/cart/getCartProducts}">
+                <a href="#" onclick="this.parentNode.submit()">
+                    <div class="card border-warning mx-sm-1 p-3">
+                        <div class="card border-warning shadow text-warning p-3 my-card" ><span class="fa fa-inbox" aria-hidden="true"></span></div>
+                        <div class="text-warning text-center mt-3"><h2>Checkout</h2></div>
+                        <div class="text-warning text-center mt-2">
+                            <img style="height: 80px; width: 80px;" th:src="@{../css/images/createIcon.png}">
+                        </div>
+                    </div>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container mt-2">
+    <div class="row">
+        <div th:each="product : ${products}" class="col-md-3 col-sm-6">
+            <div class="card card-block">
+                <form th:action="@{/products/product}" method="GET">
+                    <input type="hidden" name="id" th:value="${product.id}" />
+                    <a onclick="this.parentNode.submit()">
+                        <img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
+                        <h5 class="card-title mt-3 mb-3" th:text="${product.name}"> </h5>
+                        <p class="card-text" th:text="${product.discription}"></p>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

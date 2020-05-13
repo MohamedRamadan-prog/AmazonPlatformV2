@@ -25,11 +25,10 @@ public class OrderLine {
 	@OneToOne(cascade = CascadeType.MERGE)
 	@Valid
 	private Product product;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Valid
 	private Order order;
-	
 
 	public Long getId() {
 		return Id;
@@ -37,6 +36,9 @@ public class OrderLine {
 
 	public void setId(Long id) {
 		Id = id;
+	}
+
+	public OrderLine() {
 	}
 
 	public OrderLine(int quantity, double price, Product product) {
@@ -85,6 +87,5 @@ public class OrderLine {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-
 
 }

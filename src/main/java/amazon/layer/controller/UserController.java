@@ -17,13 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import amazon.layer.domainn.User;
 import amazon.layer.dto.UserForm;
-import amazon.layer.service.ReportManagerService;
 import amazon.layer.service.UserService;
 import net.sf.jasperreports.engine.JRException;
+
 
 @Controller
 @SessionAttributes("shoppingCart")
@@ -77,4 +79,12 @@ public class UserController {
 
 		return "redirect:/login";
 	}
+	
+	@RequestMapping("/userById")
+	public User getUserById(@RequestParam("id") Long id)
+	{
+		return userService.getUserById(id).get();
+		
+	}
+	
 }

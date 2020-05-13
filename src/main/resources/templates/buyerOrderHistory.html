@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/sellerHome.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-default panel-order">
+    <div class="panel-heading">
+        <strong>Order history</strong>
+        <div class="btn-group pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                    Filter history <i class="fa fa-filter"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Approved orders</a></li>
+                    <li><a href="#">Pending orders</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:each="order : ${orders}" class="panel-body">
+        <div th:each="orderline : ${order.orderLines}" class="row">
+            <div class="col-md-1">
+                <img class="media-object img-thumbnail" th:src="@{'/products/' + ${orderline.product.id} + '.png'}" />
+            </div>
+            <div class="col-md-11">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right"><label class="label label-danger" th:text="${order.orderStatus}"></label> </div>
+                        <span>
+                            <strong th:text="${orderline.product.name}"></strong>
+                        </span>
+                        <br/>
+                        <strong>Quantity </strong>
+                        <span class="label label-info" th:text="${orderline.quantity}">
+                        </span>
+                        <br/>
+                        <strong>Price: </strong>
+                        <strong th:text="${orderline.price}">
+                        </strong>
+                        <br/>
+                        <form th:action="@{orders/cancelOrder}">
+                            <a onclick="this.parentNode.submit()">
+                        <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Danger"></a>
+                        </a>
+                        </form>
+                    </div>
+                    <div class="col-md-12" th:text="${order.creationDate}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">Put here some note for example: bootdey si a gallery of free bootstrap snippets</div>
+</div>
+</body>
+</html>
