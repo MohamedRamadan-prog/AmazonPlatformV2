@@ -1,16 +1,17 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css" integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <body>
 
@@ -63,7 +64,7 @@
 							<dl class="param param-inline">
 								<dt>Quantity: </dt>
 								<dd>
-                                    <input th:value="1">
+                                    <input name="quantity" th:value="1">
 								</dd>
 							</dl>  <!-- item-property .// -->
 						</div> <!-- col.// -->
@@ -76,10 +77,31 @@
 			</aside> <!-- col.// -->
 		</div> <!-- row.// -->
 	</div> <!-- card.// -->
-
-
 </div>
-<!--container.//-->
-<br><br><br>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>User Comments </h3>
+		</div><!-- /col-sm-12 -->
+	</div><!-- /row -->
+	<div class="row">
+		<div th:each="review : ${product.reviews}" class="col-sm-1">
+			<div class="thumbnail">
+				<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div th:each="review : ${product.reviews}" class="col-sm-5">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong th:text="${review.id}"></strong> <span class="text-muted" th:text="${review.creationDateTime}"></span>
+				</div>
+				<div class="panel-body" th:text="${review.comment}">
+				</div><!-- /panel-body -->
+			</div><!-- /panel panel-default -->
+		</div><!-- /col-sm-5 -->
+
+</div><!-- /container -->
 </body>
 </html>
