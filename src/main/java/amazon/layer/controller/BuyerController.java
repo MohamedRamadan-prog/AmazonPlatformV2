@@ -3,8 +3,8 @@ package amazon.layer.controller;
 import java.util.List;
 import java.util.Set;
 
-import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,7 +39,7 @@ public class BuyerController {
 	public String showSellerProducts() {
 		return "testFollowUnfollow.html";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/followSeller", method = RequestMethod.POST)
 	public String followSeller(@RequestParam("sellerEmail") String sellerEmail, Model model) {
 
@@ -49,7 +49,7 @@ public class BuyerController {
 		model.addAttribute("followed", buyerService.isFollowed(buyerEmail, sellerEmail));
 		return "forward:/products/product";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/unfollowSeller", method = RequestMethod.POST)
 	public String unfollowSeller(@RequestParam("sellerEmail") String sellerEmail, Model model) {
 
@@ -60,6 +60,7 @@ public class BuyerController {
 		return "forward:/products/product";
 	}
 
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/buyerFollowing", method = RequestMethod.GET)
 	public String unfollowSeller(Model model) {
 
@@ -69,7 +70,7 @@ public class BuyerController {
 		model.addAttribute("sellers", sellers);
 		return "testFollowUnfollow.html";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/ordersHistory", method = RequestMethod.GET)
 	public String getMyOrdersHistory(Model model) {
 
@@ -79,7 +80,7 @@ public class BuyerController {
 		model.addAttribute("orders", orders);
 		return "buyerOrderHistory";
 	}
-	
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/getProductSellerForBuyer")
 	public String getProductSellerForBuyer(@ModelAttribute("status") Long sellerId,Model model,Authentication authentication)
 	{	

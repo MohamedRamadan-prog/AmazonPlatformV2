@@ -43,8 +43,8 @@ public class UserController {
 	@RequestMapping(value = "/home")
 	public String home(Model model, Authentication authentication, RedirectAttributes rdr ,HttpSession session) {
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
-		boolean isSeller = authorities.contains(new SimpleGrantedAuthority("SELLER"));
+		boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		boolean isSeller = authorities.contains(new SimpleGrantedAuthority("ROLE_SELLER"));
 		if (isAdmin)
 			return "redirect:review/getReviws";
 		else if(isSeller){

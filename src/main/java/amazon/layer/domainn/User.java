@@ -48,10 +48,10 @@ public class User {
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany( fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
-	private List<Role> roles;
+	private Set<Role> roles;
 
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
@@ -75,7 +75,7 @@ public class User {
 	}
 
 	public User(@NotEmpty String name, @NotEmpty @Email(message = "{errors.invalid_email}") String email,
-			@NotEmpty @Size(min = 4) String password, List<Role> roles, @NotEmpty String firstName,
+			@NotEmpty @Size(min = 4) String password, Set<Role> roles, @NotEmpty String firstName,
 			@NotEmpty String lastName, Address address) {
 		super();
 		this.name = name;
@@ -123,11 +123,11 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 

@@ -16,7 +16,7 @@ public class SellerServiceImpl implements SellerService {
 
 	@Override
 	public Set<User> getInActiveSellers() {
-		Set<User> inActiveSellers = userRepository.findBySpecificRoles("SELLER");
+		Set<User> inActiveSellers = userRepository.findBySpecificRoles("ROLE_SELLER");
 		return inActiveSellers;
 	}
 

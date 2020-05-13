@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,22 +33,22 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	UserService userService;
-	
 
 	@Autowired
 	private StorageService storageService;
 
 	@Autowired
 	private BuyerService buyerService;
-	
+
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/list")
-	public String list(Model model,Authentication authentication) {
+	public String list(Model model, Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
 		String username = authentication.getName();
-		model.addAttribute("followingSellers",buyerService.getBuyerFlowingList(username));
+		model.addAttribute("followingSellers", buyerService.getBuyerFlowingList(username));
 		return "buyerHome";
 	}
 
@@ -58,23 +59,25 @@ public class ProductController {
 	}
 
 	@RequestMapping("/getSellersProduct")
+	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
 	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
 		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
 		return "sellersHome";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct,Authentication auth) {
-		String username = auth.getName(); 
+	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct, Authentication auth) {
+		String username = auth.getName();
 		User seller = userService.getUserByEmail(username);
-		if(seller.isActive())
-		{
+		if (seller.isActive()) {
 			return "addProduct";
 		}
-		
+
 		return "addProduct";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/updateProductForm", method = RequestMethod.GET)
 	public String updateProduct(@RequestParam(value = "id", required = false) Long productId, Model model) {
 		Optional<Product> product = productService.getProductById(productId);
@@ -82,6 +85,7 @@ public class ProductController {
 		return "updateProduct";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public String processUpdateProduct(@RequestParam(value = "id", required = false) Long productId,
 			@ModelAttribute("product") ProductForm product) {
@@ -91,6 +95,7 @@ public class ProductController {
 		return "redirect:/home";
 	}
 
+	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
 	@RequestMapping("/product")
 	public String getProductDetail(@RequestParam(value = "id", required = true) Long productId, Model model) {
 		Optional<Product> product = productService.getProductById(productId);
@@ -102,6 +107,7 @@ public class ProductController {
 		return "productDetails";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
 	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,
 			BindingResult result) {
@@ -126,6 +132,7 @@ public class ProductController {
 		return "redirect:/home";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
 	public String removeProduct(@RequestParam(value = "id", required = false) Long productId) {
 

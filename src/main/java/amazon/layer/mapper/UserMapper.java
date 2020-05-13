@@ -1,7 +1,7 @@
 package amazon.layer.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -23,7 +23,7 @@ public class UserMapper {
 		newUser.setEmail(email);
 		Role newrole = new Role();
 		newrole.setName(role);
-		List<Role> roles = new ArrayList<Role>();
+		Set<Role> roles = new HashSet<Role>();
 		roles.add(newrole);
 		newUser.setRoles(roles);
 		newUser.setAddress(new Address("IOWA", "fairField", "123654", "4st"));
