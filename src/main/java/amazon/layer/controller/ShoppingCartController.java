@@ -28,6 +28,16 @@ public class ShoppingCartController{
 	{	
 		    Product  product = productService.getProductById(productId).get();
 			Hashtable cart = (Hashtable) session.getAttribute("shoppingCart");
+			Set<Product> products = cart.keySet();
+			for(Product prd : products)
+			{
+				if(prd.getId().intValue() == product.getId().intValue())
+				{
+					Integer currQuantity= (Integer) cart.get(prd);
+					quantity += currQuantity;
+					cart.remove(prd);
+				}
+			}
 			cart.put(product, quantity);
 			session.setAttribute("shoppingCart", cart);
 		return "redirect:/products/list";
