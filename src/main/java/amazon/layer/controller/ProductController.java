@@ -35,7 +35,7 @@ public class ProductController {
 	@RequestMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
-		return "buyerHome";
+		return /*"sellersHome"*/"products";
 	}
 
 	@RequestMapping("/getSellersProduct")
@@ -101,7 +101,7 @@ public class ProductController {
 	public String removeProduct(@RequestParam(value = "id", required = false) Long productId) {
 
 		boolean isDeleted = productService.deleteById(productId);
-		// TODO
+
 		return "redirect:/home";
 	}
 
