@@ -12,5 +12,8 @@ public interface UserService {
 	
 	public boolean save(UserForm userForm, BindingResult bindingResult);
 	public Optional<User> getUserById(Long id);
+	public User getUserByEmail(String username);
+	public void saveUser(User user);
+
 	
 }

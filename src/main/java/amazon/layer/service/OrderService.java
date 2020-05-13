@@ -11,7 +11,7 @@ import amazon.layer.domainn.Payment;
 public interface OrderService {
 
 
-public void placeOrder(Payment payment,Address shipAddress,Address billAddress,Hashtable<Long,Integer> cart,String username );
+public void placeOrder(Payment payment,Address shipAddress,Address billAddress,Hashtable<Long,Integer> cart,String username, Integer points );
 
 public Set<Order> getOrdersOfSeller(String sellerEmail);
 

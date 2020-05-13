@@ -45,7 +45,7 @@ public class OrderServiceImp implements OrderService {
 		orderRepository.save(order);
 	}
 	
-	public void placeOrder(Payment payment,Address shipAddress,Address billAddress,Hashtable cart,String username )
+	public void placeOrder(Payment payment,Address shipAddress,Address billAddress,Hashtable cart,String username , Integer points)
 	{	
 		Set<Product> products = cart.keySet();
 		Hashtable<Integer , List<OrderLine>> listOfSeller = new Hashtable<>();
@@ -86,12 +86,19 @@ public class OrderServiceImp implements OrderService {
 						orderPerPrice += orderline.getPrice();
 						System.out.println(orderline.getProduct().getName());
 				}
+			
+			User seller = userRepository.findById(id.longValue()).get();
+			User buyer  = userRepository.findByEmail(username);
+			
+			if(points != 0) {orderPerPrice -= points;
+				     	buyer.setPoints(0);		
+					}
+			
 			order.setTotalPrice(orderPerPrice);
 			order.setBillingAddress(billAddress);
 			order.setShippingAddress(shipAddress);
 			
-			User seller = userRepository.findById(id.longValue()).get();
-			User buyer  = userRepository.findByEmail(username);
+		
 			
 			order.setSeller(seller);
 			order.setBuyer(buyer);

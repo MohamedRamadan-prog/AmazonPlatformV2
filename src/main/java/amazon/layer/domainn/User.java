@@ -68,6 +68,9 @@ public class User {
 	@Column
 	boolean isActive;
 
+	@Column
+	Integer points;
+	
 	public User() {
 	}
 
@@ -82,8 +85,9 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
-		reviews = new HashSet<Review>();
-		isActive = false;
+		this.reviews = new HashSet<Review>();
+		this.isActive = false;
+		this.points = 0;
 
 	}
 
@@ -184,4 +188,12 @@ public class User {
 		this.buyerFollowing = buyerFollowing;
 	}
 
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+	
 }

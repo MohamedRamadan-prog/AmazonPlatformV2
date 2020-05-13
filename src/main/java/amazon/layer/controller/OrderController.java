@@ -14,20 +14,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import amazon.layer.domainn.Address;
 import amazon.layer.domainn.Order;
 import amazon.layer.domainn.OrderStatus;
 import amazon.layer.domainn.Payment;
+import amazon.layer.domainn.User;
 import amazon.layer.service.OrderService;
+import amazon.layer.service.UserService;
 
 @Controller
 @RequestMapping("orders")
-@SessionAttributes({"addedshippingAddress","addedBillingAddress","addedpayment","currentOrder","shoppingCart"})
+@SessionAttributes({"addedshippingAddress","addedBillingAddress","addedpayment","currentOrder","shoppingCart","points"})
 public class OrderController {
 
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	UserService userService;
 
 	@RequestMapping("/activeList")
 	public String ordersList(Model model) {
@@ -97,22 +103,38 @@ public class OrderController {
 	
 	
 	@RequestMapping("/confirmOrder")
-	public String confirmOrder(HttpSession session,Model model)
+	public String confirmOrder(HttpSession session,Model model , Authentication authentication)
 	{	
+		String username = authentication.getName();
+		User currenrUser = userService.getUserByEmail(username);
+		currenrUser.setPoints(currenrUser.getPoints()+5);
+		System.out.println(currenrUser.getPoints());
+		userService.saveUser(currenrUser);
+
+		session.setAttribute("points",currenrUser.getPoints());
 		return "ConfirmPage";
 	}
 	
 	@RequestMapping("/placeOrder")
-	public String placeOrder(HttpSession session,Authentication authentication)
+	public String placeOrder(@ModelAttribute("p")Integer points , HttpSession session,Authentication authentication,Model model,SessionStatus status)
 	{	
+		System.out.println("palce order"+ points);
+		System.out.println();
+		
 		Payment payment = (Payment) session.getAttribute("addedpayment");
 		Address shipAddress = (Address) session.getAttribute("addedshippingAddress");
 		Address billAddress = (Address) session.getAttribute("addedBillingAddress");
 		Hashtable<Long, Integer> cart = (Hashtable<Long, Integer>) session.getAttribute("shoppingCart");
 		String username = authentication.getName();
-		orderService.placeOrder( payment, shipAddress, billAddress, cart , username );
+		User currenrUser = userService.getUserByEmail(username);
+
+		orderService.placeOrder( payment, shipAddress, billAddress, cart , username, points);
 		
-		return "ConfirmPage";
+		status.setComplete();
+		
+		session.setAttribute("shoppingCart", new Hashtable<Long,Integer>());
+
+		return "orderDone";
 	}
 
 	@RequestMapping(value = "/cancelOrder")

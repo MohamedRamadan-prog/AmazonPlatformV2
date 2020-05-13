@@ -48,4 +48,13 @@ public class UserServiceImp implements UserService{
 		return userRepository.findById(id);
 	}
 	
+	public User getUserByEmail(String username)
+	{
+		return userRepository.findByEmail(username);
+	}
+	
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
+	
 }
