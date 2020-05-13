@@ -96,7 +96,7 @@
 	</div><!-- /row -->
 	<div class="row">
 		<div th:each="review : ${product.reviews}" class="col-sm-1">
-			<div class="thumbnail">
+			<div class="thumbnail" th:if="${review.accepted}">
 				<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
 			</div><!-- /thumbnail -->
 		</div><!-- /col-sm-1 -->
