@@ -1,5 +1,6 @@
 package amazon.layer.controller;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.Hashtable;
 
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import amazon.layer.dto.UserForm;
+import amazon.layer.service.ReportManagerService;
 import amazon.layer.service.UserService;
+import net.sf.jasperreports.engine.JRException;
 
 @Controller
 @SessionAttributes("shoppingCart")
@@ -28,6 +31,8 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	
 
 	@RequestMapping(value = { "/", "/login" })
 	public String defaultlogin(Model model) {
@@ -58,7 +63,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signup")
-	public String signUp(Model model) {
+	public String signUp(Model model) throws FileNotFoundException, JRException {
 		model.addAttribute("signupform", new UserForm());
 		return "signup";
 	}

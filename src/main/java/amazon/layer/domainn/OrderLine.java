@@ -31,6 +31,14 @@ public class OrderLine {
 	private Order order;
 	
 
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
 	public OrderLine(int quantity, double price, Product product) {
 		super();
 		this.quantity = quantity;

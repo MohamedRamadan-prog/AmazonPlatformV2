@@ -6,5 +6,7 @@ import net.sf.jasperreports.engine.JRException;
 
 public interface ReportManagerService {
 
-	void generatePdfInvoice(String reportFormat) throws FileNotFoundException, JRException;
+	void generatePdfInvoice(Long orderId)
+			throws FileNotFoundException, JRException;
+
 }
