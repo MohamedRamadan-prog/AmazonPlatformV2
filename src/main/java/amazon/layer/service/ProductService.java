@@ -2,6 +2,7 @@ package amazon.layer.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -12,8 +13,8 @@ public interface ProductService {
 
 	List<Product> getAllProducts();
 
-	List<Product> getSellerProducts(String sellerEmail);
-
+	public Set<Product> getSellerProducts(String sellerEmail);
+	
 	Product saveOrUpdate(@Valid ProductForm newProduct, String sellerEmail);
 
 	Optional<Product> getProductById(Long productId);

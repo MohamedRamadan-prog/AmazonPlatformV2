@@ -1,6 +1,6 @@
 package amazon.layer.repository;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +12,6 @@ import amazon.layer.domainn.User;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 //	@Query("select from Product p where p.seller.id =:sellerId")
-	List<Product> findBySeller(User seller);
+	Set<Product> findBySeller(User seller);
 
 }

@@ -12,12 +12,21 @@
     </head>
 <body>
 
+<div>
+<form th:action="@{/logout}" style="">
+    <input type ="submit" name="Get Reviews" value="Logout">
+</form>
+</div>
+<br>
+
 <form th:action="@{/review/getReviws}">
     <input type ="submit" name="Get Reviews" value="Get Pinding Reviews">
 </form>
 <form th:action="@{/seller/inActive_Sellers}">
     <input type ="submit" name="Get Reviews" value="Get InActive Sellers">
 </form>
+
+
 
 </body>
 </html>

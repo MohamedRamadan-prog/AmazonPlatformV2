@@ -3,19 +3,24 @@ package amazon.layer.controller;
 import java.util.List;
 import java.util.Set;
 
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import amazon.layer.domainn.Order;
+import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.service.BuyerService;
 import amazon.layer.service.OrderService;
+import amazon.layer.service.UserService;
 
 @Controller
 @RequestMapping({ "/buyer" })
@@ -26,6 +31,9 @@ public class BuyerController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "/success")
 	public String showSellerProducts() {
@@ -71,4 +79,19 @@ public class BuyerController {
 		model.addAttribute("orders", orders);
 		return "buyerOrderHistory";
 	}
+	
+	@RequestMapping("/getProductSellerForBuyer")
+	public String getProductSellerForBuyer(@ModelAttribute("status") Long sellerId,Model model,Authentication authentication)
+	{	
+		User seller = userService.getUserById(sellerId).get();
+		System.out.println(seller.getId());
+		
+		Set<Product> products = buyerService.getProductSellerForBuyer(seller);
+		String username = authentication.getName();
+		model.addAttribute("followingSellers",buyerService.getBuyerFlowingList(username));
+		model.addAttribute("products", products);
+		return "buyerHome";
+	}
+	
+	
 }

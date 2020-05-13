@@ -2,6 +2,7 @@ package amazon.layer.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -74,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getSellerProducts(String sellerEmail) {
+	public Set<Product> getSellerProducts(String sellerEmail) {
 
 		User seller = userRepository.findByEmail(sellerEmail);
 

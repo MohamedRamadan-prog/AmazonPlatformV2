@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import amazon.layer.domainn.Product;
+import amazon.layer.domainn.User;
 import amazon.layer.dto.ProductForm;
+import amazon.layer.service.BuyerService;
 import amazon.layer.service.ProductService;
 import amazon.layer.service.StorageService;
+import amazon.layer.service.UserService;
 
 @Controller
 @RequestMapping("/products")
@@ -28,13 +32,22 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	UserService userService;
+	
 
 	@Autowired
 	private StorageService storageService;
 
+	@Autowired
+	private BuyerService buyerService;
+	
 	@RequestMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
+		String username = authentication.getName();
+		model.addAttribute("followingSellers",buyerService.getBuyerFlowingList(username));
 		return "buyerHome";
 	}
 
@@ -51,8 +64,15 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct) {
-		return "addProduct";
+	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct,Authentication auth) {
+		String username = auth.getName(); 
+		User seller = userService.getUserByEmail(username);
+		if(seller.isActive())
+		{
+			return "addProduct";
+		}
+		
+		return "sellersHome";
 	}
 
 	@RequestMapping(value = "/updateProductForm", method = RequestMethod.GET)
