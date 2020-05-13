@@ -41,23 +41,23 @@ public class BuyerController {
 	}
 
 	@RequestMapping(value = "/followSeller", method = RequestMethod.POST)
-	public String followSeller(@RequestParam("sellerEmail") String sellerEmail) {
+	public String followSeller(@RequestParam("sellerEmail") String sellerEmail, Model model) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String buyerEmail = ((UserDetails) principal).getUsername();
 		buyerService.followSeller(buyerEmail, sellerEmail);
-
+		model.addAttribute("followed", buyerService.isFollowed(buyerEmail, sellerEmail));
 		return "forward:/products/product";
 	}
 
 	@RequestMapping(value = "/unfollowSeller", method = RequestMethod.POST)
-	public String unfollowSeller(@RequestParam("sellerEmail") String sellerEmail) {
+	public String unfollowSeller(@RequestParam("sellerEmail") String sellerEmail, Model model) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String buyerEmail = ((UserDetails) principal).getUsername();
 		buyerService.unfollowSeller(buyerEmail, sellerEmail);
-
-		return "redirect:/buyer/success";
+		model.addAttribute("followed", buyerService.isFollowed(buyerEmail, sellerEmail));
+		return "forward:/products/product";
 	}
 
 	@RequestMapping(value = "/buyerFollowing", method = RequestMethod.GET)

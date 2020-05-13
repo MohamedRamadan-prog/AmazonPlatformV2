@@ -72,7 +72,7 @@ public class ProductController {
 			return "addProduct";
 		}
 		
-		return "sellersHome";
+		return "addProduct";
 	}
 
 	@RequestMapping(value = "/updateProductForm", method = RequestMethod.GET)
@@ -87,7 +87,6 @@ public class ProductController {
 			@ModelAttribute("product") ProductForm product) {
 		MultipartFile productImage = product.getProductImage();
 		storageService.saveImage(productImage, productId);
-
 		productService.update(product, productId);
 		return "redirect:/home";
 	}
@@ -96,6 +95,10 @@ public class ProductController {
 	public String getProductDetail(@RequestParam(value = "id", required = true) Long productId, Model model) {
 		Optional<Product> product = productService.getProductById(productId);
 		model.addAttribute("product", product.get());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String buyerEmail = ((UserDetails) principal).getUsername();
+		String sellerEmail = product.get().getSeller().getEmail();
+		model.addAttribute("followed", buyerService.isFollowed(buyerEmail, sellerEmail));
 		return "productDetails";
 	}
 

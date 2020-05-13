@@ -34,6 +34,7 @@
 				<article class="card-body p-5">
 					<h3 class="title mb-3" th:text="${product.name}">
 					</h3>
+                    <div th:if="${followed == false}">
 					<form th:action="@{/buyer/followSeller}" method="POST">
 						<input type="hidden" name="sellerEmail" th:value="${product.seller.email}">
 						<input type="hidden" name="id" th:value="${product.id}">
@@ -42,6 +43,17 @@
                             Follow Seller
 						</a>
 					</form>
+					</div>
+					<div th:if="${followed == true}">
+						<form th:action="@{/buyer/unfollowSeller}" method="POST">
+							<input type="hidden" name="sellerEmail" th:value="${product.seller.email}">
+							<input type="hidden" name="id" th:value="${product.id}">
+
+							<a class="glyphicon glyphicon-minus" onclick="this.parentNode.submit()">
+								Unfollow Seller
+							</a>
+						</form>
+					</div>
 
 					<p class="price-detail-wrap">
 	<span class="price h3 text-warning">
