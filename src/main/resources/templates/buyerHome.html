@@ -76,11 +76,11 @@
         </div>
 
         <div class="col-md-3">
-            <form th:action="@{/products/addProduct}">
+            <form th:action="@{/cart/getCartProducts}">
                 <a href="#" onclick="this.parentNode.submit()">
                     <div class="card border-warning mx-sm-1 p-3">
                         <div class="card border-warning shadow text-warning p-3 my-card" ><span class="fa fa-inbox" aria-hidden="true"></span></div>
-                        <div class="text-warning text-center mt-3"><h2>Create New Product</h2></div>
+                        <div class="text-warning text-center mt-3"><h2>Checkout</h2></div>
                         <div class="text-warning text-center mt-2">
                             <img style="height: 80px; width: 80px;" th:src="@{../css/images/createIcon.png}">
                         </div>
@@ -93,14 +93,8 @@
 <div class="container mt-2">
     <div class="row">
         <div th:each="product : ${products}" class="col-md-3 col-sm-6">
-            <form th:action="@{/products/removeProduct}" method="POST">
-                <input type="hidden" name="id" th:value="${product.id}" />
-                <a href="#" onclick="this.parentNode.submit()">
-                    <img style="width: 25px; height: 25px; margin-bottom: 10px;" src="https://img.icons8.com/flat_round/64/000000/delete-sign.png"/>
-                </a>
-            </form>
             <div class="card card-block">
-                <form th:action="@{/products/updateProductForm}" method="GET">
+                <form th:action="@{/products/product}" method="GET">
                     <input type="hidden" name="id" th:value="${product.id}" />
                     <a onclick="this.parentNode.submit()">
                         <img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>

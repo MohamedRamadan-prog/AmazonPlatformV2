@@ -34,11 +34,13 @@ public class ProductController {
 	@RequestMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
-<<<<<<< HEAD
 		return "buyerHome";
-=======
-		return  "sellersHome"/*"products"*/;
->>>>>>> master
+	}
+
+	@RequestMapping("/productlist")
+	public String productList(Model model) {
+		model.addAttribute("products", productService.getAllProducts());
+		return "products";
 	}
 
 	@RequestMapping("/getSellersProduct")

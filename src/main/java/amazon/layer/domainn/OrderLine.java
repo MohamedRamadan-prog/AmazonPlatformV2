@@ -31,6 +31,7 @@ public class OrderLine {
 	private Order order;
 	
 
+	public OrderLine(){}
 	public OrderLine(int quantity, double price, Product product) {
 		super();
 		this.quantity = quantity;

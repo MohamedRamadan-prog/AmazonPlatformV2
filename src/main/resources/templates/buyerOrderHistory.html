@@ -29,21 +29,32 @@
 
     <div th:each="order : ${orders}" class="panel-body">
         <div th:each="orderline : ${order.orderLines}" class="row">
-            <div class="col-md-1"><img src="https://bootdey.com/img/Content/user_3.jpg" class="media-object img-thumbnail"></div>
+            <div class="col-md-1">
+                <img class="media-object img-thumbnail" th:src="@{'/products/' + ${orderline.product.id} + '.png'}" />
+            </div>
             <div class="col-md-11">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="pull-right"><label class="label label-danger">rejected</label> </div>
+                        <div class="pull-right"><label class="label label-danger" th:text="${order.orderStatus}"></label> </div>
                         <span>
-                            <strong th:text="${orderline.product}"></strong></span> <span class="label label-info" th:text="Quaintity = ${orderline.quantity}">
-                    </span>
-                        <br th:text="${orderline.price}">
-                        <br>
-                        <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+                            <strong th:text="${orderline.product.name}"></strong>
+                        </span>
+                        <br/>
+                        <strong>Quantity </strong>
+                        <span class="label label-info" th:text="${orderline.quantity}">
+                        </span>
+                        <br/>
+                        <strong>Price: </strong>
+                        <strong th:text="${orderline.price}">
+                        </strong>
+                        <br/>
+                        <form th:action="@{orders/cancelOrder}">
+                            <a onclick="this.parentNode.submit()">
                         <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Danger"></a>
-                        <a data-placement="top" class="btn btn-info  btn-xs glyphicon glyphicon-usd" href="#" title="Danger"></a>
+                        </a>
+                        </form>
                     </div>
-                    <div class="col-md-12" th:text="Made on ${order.creationDate}">
+                    <div class="col-md-12" th:text="${order.creationDate}">
                     </div>
                 </div>
             </div>
