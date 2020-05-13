@@ -2,20 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
     <link type="text/css" rel="stylesheet" href="/css/sellerHome.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Role visualization</title>
-
     <head>
         <meta charset="ISO-8859-1">
         <title>Amazon Seller</title>
     </head>
 <body>
-
+<div th:replace="Navbar"></div>
 <div>
 <form th:action="@{/logout}" style="">
     <input type ="submit" name="Get Reviews" value="Logout">
