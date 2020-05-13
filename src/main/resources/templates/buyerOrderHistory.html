@@ -48,10 +48,15 @@
                         <strong th:text="${orderline.price}">
                         </strong>
                         <br/>
-                        <form th:action="@{orders/cancelOrder}">
-                            <a onclick="this.parentNode.submit()">
-                        <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Danger"></a>
+                        <form th:action="@{/orders/cancelOrder}" method="GET">
+                        <a  onclick="this.parentNode.submit()" data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash" title="Danger">
                         </a>
+                        </form>
+                        <form th:action="@{/orders/generateInvoice}" method="GET">
+                            <input type="hidden" name="id" th:value="${order.id}"/>
+                             <a onclick="this.parentNode.submit()" data-placement="top" class="btn btn-success  btn-xs glyphicon glyphicon-print" title="Danger">
+                             </a>
+                            </a>
                         </form>
                     </div>
                     <div class="col-md-12" th:text="${order.creationDate}">

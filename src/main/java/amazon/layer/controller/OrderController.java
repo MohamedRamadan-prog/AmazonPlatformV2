@@ -139,7 +139,7 @@ public class OrderController {
 		
 		session.setAttribute("shoppingCart", new Hashtable<Long,Integer>());
 
-		return "orderDone";
+		return "redirect:/buyer/ordersHistory";
 	}
 
 	@RequestMapping(value = "/cancelOrder")
