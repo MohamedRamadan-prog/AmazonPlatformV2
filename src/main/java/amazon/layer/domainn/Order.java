@@ -20,9 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.Valid;
 
 @Entity
@@ -40,10 +38,10 @@ public class Order {
 	@Valid
 	private Set<@Valid OrderLine> orderLines;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
 	private Address shippingAddress;
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
 	private Address billingAddress;
 

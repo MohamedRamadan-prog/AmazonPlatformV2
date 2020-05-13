@@ -1,32 +1,29 @@
 package amazon.layer.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.SysexMessage;
+import java.util.Collection;
+import java.util.Hashtable;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import amazon.layer.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import amazon.layer.domainn.User;
-import amazon.layer.dto.UserForm;
-import amazon.layer.service.UserService;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collection;
+import amazon.layer.dto.UserForm;
+import amazon.layer.service.UserService;
 
 @Controller
+@SessionAttributes("shoppingCart")
 public class UserController {
 
 	@Autowired
@@ -36,9 +33,9 @@ public class UserController {
 	public String defaultlogin(Model model) {
 		return "index";
 	}
-
+	
 	@RequestMapping(value = "/home")
-	public String home(Model model, Authentication authentication, RedirectAttributes rdr) {
+	public String home(Model model, Authentication authentication, RedirectAttributes rdr ,HttpSession session) {
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMIN"));
 		boolean isSeller = authorities.contains(new SimpleGrantedAuthority("SELLER"));
@@ -47,10 +44,17 @@ public class UserController {
 		else if(isSeller){
 			String email = authentication.getName();
 			rdr.addAttribute("email", email);
+			
+			session.setAttribute("shoppingCart", new Hashtable<Long,Integer>());
+			
 		    return "redirect:/products/getSellersProduct";
+		    
 		}
 		else
+		{
+			session.setAttribute("shoppingCart", new Hashtable<Long,Integer>());
 			return "redirect:/products/list";
+		}
 	}
 
 	@RequestMapping(value = "/signup")

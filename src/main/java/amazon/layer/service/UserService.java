@@ -1,15 +1,9 @@
 package amazon.layer.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import amazon.layer.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import amazon.layer.domainn.Role;
 import amazon.layer.domainn.User;
 import amazon.layer.dto.UserForm;
 import amazon.layer.mapper.UserMapper;

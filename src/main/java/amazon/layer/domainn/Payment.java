@@ -3,9 +3,6 @@ package amazon.layer.domainn;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-enum paymentType {
-	Visa, MasterCard, Prepaid
-};
 
 @Entity
 public class Payment {
@@ -17,12 +14,12 @@ public class Payment {
 	@NotEmpty()
 	private String csv;
 	@Enumerated(EnumType.STRING)
-	paymentType payType;
+	PaymentType payType;
 
 	public Payment() {
 	}
 
-	public Payment(@NotEmpty String number, @NotEmpty paymentType payType, String csv) {
+	public Payment(@NotEmpty String number, @NotEmpty PaymentType payType, String csv) {
 		super();
 		this.number = number;
 		this.payType = payType;
@@ -45,11 +42,11 @@ public class Payment {
 		this.number = number;
 	}
 
-	public paymentType getPayType() {
+	public PaymentType getPayType() {
 		return payType;
 	}
 
-	public void setPayType(paymentType payType) {
+	public void setPayType(PaymentType payType) {
 		this.payType = payType;
 	}
 
