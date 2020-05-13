@@ -73,27 +73,7 @@ public class AmazonApplication {
 
 			
 			
-			//add reviews for seller 1 & 2
-			Set<Review> reviews = new HashSet<Review>();
-			Review review1 = new Review("----------Comment 1-------------");
-			Review review2 = new Review("----------Comment 2-------------");
-			Review review3 = new Review("-----------Comment 3-------------");
-			reviews.add(review1);
-			reviews.add(review2);
-			reviews.add(review3);
-
-			Set<Review> reviews2 = new HashSet<Review>();
-			Review review1_2 = new Review("----------Comment 1-------------");
-			Review review2_2 = new Review("----------Comment 2-------------");
-			Review review3_2 = new Review("-----------Comment 3-------------");
-			reviews2.add(review1_2);
-			reviews2.add(review2_2);
-			reviews2.add(review3_2);
 			
-		
-			
-		 	seller.setReviews(reviews);
-		    seller2.setReviews(reviews2);
 		    //-----------------------------------------------------------------------------------
 		    
 		    // add order for seller 2
