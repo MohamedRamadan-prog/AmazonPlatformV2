@@ -1,0 +1,115 @@
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css" integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<body>
+
+<div class="container">
+<br/>
+    <hr>
+
+	<div class="card">
+		<div class="row">
+			<aside class="col-sm-5 border-right">
+				<article class="gallery-wrap">
+					<div class="img-big-wrap">
+						<div>
+							<img style="width: 100%; height: 100%;" th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
+						</div>
+					</div> <!-- slider-product.// -->
+				</article> <!-- gallery-wrap .end// -->
+			</aside>
+			<aside class="col-sm-7">
+				<article class="card-body p-5">
+					<h3 class="title mb-3" th:text="${product.name}">
+					</h3>
+					<form th:action="@{/buyer/followSeller}" method="POST">
+						<input type="hidden" name="sellerEmail" th:value="${product.seller.email}">
+						<a class="glyphicon glyphicon-plus" onclick="this.parentNode.submit()">
+                            Follow Seller
+						</a>
+					</form>
+
+					<p class="price-detail-wrap">
+	<span class="price h3 text-warning">
+		<span class="currency">US $</span><span class="num" th:text="${product.price}"></span>
+	</span>
+					</p> <!-- price-detail-wrap .// -->
+					<dl class="item-property">
+						<dt>Description</dt>
+						<dd><p th:text="${product.discription}">
+							</p></dd>
+					</dl>
+					<dl class="param param-feature">
+						<dt>Model ID#</dt>
+						<dd th:text="${product.id}"></dd>
+					</dl>  <!-- item-property-hor .// -->
+					<dl class="param param-feature">
+						<dt>Color</dt>
+						<dd>Standard</dd>
+					</dl>  <!-- item-property-hor .// -->
+					<dl class="param param-feature">
+						<dt>Delivery</dt>
+						<dd>Russia, USA, and Europe</dd>
+					</dl>  <!-- item-property-hor .// -->
+
+					<form th:action="@{/cart/add}">
+					<hr>
+					<div class="row">
+						<div class="col-sm-5">
+							<dl class="param param-inline">
+								<dt>Quantity: </dt>
+								<dd>
+                                    <input name="quantity" th:value="1">
+								</dd>
+							</dl>  <!-- item-property .// -->
+						</div> <!-- col.// -->
+					</div> <!-- row.// -->
+					<hr>
+						<input type="hidden" name="id" th:value="${product.id}" />
+						<a onclick="this.parentNode.submit()" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+					</form>
+				</article> <!-- card-body.// -->
+			</aside> <!-- col.// -->
+		</div> <!-- row.// -->
+	</div> <!-- card.// -->
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>User Comments </h3>
+		</div><!-- /col-sm-12 -->
+	</div><!-- /row -->
+	<div class="row">
+		<div th:each="review : ${product.reviews}" class="col-sm-1">
+			<div class="thumbnail">
+				<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div th:each="review : ${product.reviews}" class="col-sm-5">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong th:text="${review.id}"></strong> <span class="text-muted" th:text="${review.creationDateTime}"></span>
+				</div>
+				<div class="panel-body" th:text="${review.comment}">
+				</div><!-- /panel-body -->
+			</div><!-- /panel panel-default -->
+		</div><!-- /col-sm-5 -->
+	</div>
+
+</div><!-- /container -->
+</body>
+</html>
