@@ -30,6 +30,17 @@ public class BuyerServiceImpl implements BuyerService {
 	}
 
 	@Override
+	public boolean isFollowed(String buyerEmail, String sellerEmail) {
+		User buyer = userRepository.findByEmail(buyerEmail);
+		User seller = userRepository.findByEmail(sellerEmail);
+		for (User u : buyer.getBuyerFollowing()){
+			if (u.getEmail() == seller.getEmail())
+				return true;
+		}
+		return false;
+	}
+
+	@Override
 	public Set<User> getBuyerFlowingList(String buyerEmail) {
 
 		User buyer = userRepository.findByEmail(buyerEmail);

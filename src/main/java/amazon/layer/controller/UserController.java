@@ -35,8 +35,7 @@ public class UserController {
 	UserService userService;
 	
 	
-
-	@RequestMapping(value = { "/", "/login" })
+	@RequestMapping("/login")
 	public String defaultlogin(Model model) {
 		return "index";
 	}
