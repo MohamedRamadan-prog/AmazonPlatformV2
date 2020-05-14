@@ -8,34 +8,35 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Role visualization</title>
-    <head>
         <meta charset="ISO-8859-1">
         <title>Amazon Seller</title>
+    <script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('myInput');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
     </head>
 <body>
 <div th:replace="Navbar"></div>
 
   
 <br>
-
-		<div>
-			<h3 style="Display:inline">Following Sellers  </h3>
-			
-			
-			<form action="#" th:action="@{/buyer/getProductSellerForBuyer}"
-									method="GET">
-													
-					<select name="status" >
-			    		<option  th:each="status : ${followingSellers}"
-									    th:value="${status.id}" th:text="${status.name}"></option>
-					</select>				
-						
-					<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Get Product</button>
-							
-			</form>
-		</div>
-		<br>
-		<br>
 
 <div class="container">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -91,7 +92,7 @@
                     <div class="card border-success mx-sm-1 p-3">
                         <div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-eye" aria-hidden="true"></span></div>
                         <div class="text-success text-center mt-3"><h2>Orders</h2></div>
-                        <div class="text-success text-center mt-2"><h1>0</h1></div>
+                        <div class="text-success text-center mt-2"><h1 th:text="${ordersCount}"></h1></div>
                     </div>
                 </a>
             </form>
@@ -127,6 +128,27 @@
             </div>
         </div>
     </div>
+</div>
+<a class="btn btn-primary btn-lg btn-block" data-toggle="collapse" href="#followFilter" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Vendors You Follow
+</a>
+<div class="collapse" id="followFilter">
+
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+        <ul id="myUL">
+            <li >
+                <form action="#" th:action="@{/products/list}" method="GET">
+                    <a onclick="this.parentNode.submit()">All</a>
+                </form>
+            </li>
+            <li th:each="seller : ${followingSellers}">
+                <form action="#" th:action="@{/buyer/getProductSellerForBuyer}" method="GET">
+                    <input type="hidden" name="status" th:value="${seller.id}">
+                    <a onclick="this.parentNode.submit()" th:text="${seller.name}"></a>
+                </form>
+            </li>
+        </ul>
 </div>
 </body>
 </html>

@@ -23,6 +23,7 @@ import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.dto.ProductForm;
 import amazon.layer.service.BuyerService;
+import amazon.layer.service.OrderService;
 import amazon.layer.service.ProductService;
 import amazon.layer.service.StorageService;
 import amazon.layer.service.UserService;
@@ -43,12 +44,19 @@ public class ProductController {
 	@Autowired
 	private BuyerService buyerService;
 
+	@Autowired
+	private OrderService orderService;
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/list")
 	public String list(Model model, Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
 		String username = authentication.getName();
 		model.addAttribute("followingSellers", buyerService.getBuyerFlowingList(username));
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfBuyer(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
 		return "buyerHome";
 	}
 
@@ -62,21 +70,25 @@ public class ProductController {
 	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
 	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
 		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
-		 model.addAttribute("sellerNotActivated" , false);
+		model.addAttribute("sellerNotActivated", false);
 
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfSeller(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
 		return "sellersHome";
 	}
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct, Authentication auth , Model model) {
+	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct, Authentication auth,
+			Model model) {
 		String username = auth.getName();
 		User seller = userService.getUserByEmail(username);
 		if (seller.isActive()) {
 			return "addProduct";
 		}
 
-		 model.addAttribute("sellerNotActivated" , true);
+		model.addAttribute("sellerNotActivated", true);
 		return "sellersHome";
 	}
 
