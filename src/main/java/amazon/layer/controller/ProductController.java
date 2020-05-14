@@ -72,7 +72,7 @@ public class ProductController {
 			return "addProduct";
 		}
 		
-		return "addProduct";
+		return "buyerHome";
 	}
 
 	@RequestMapping(value = "/updateProductForm", method = RequestMethod.GET)
