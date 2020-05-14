@@ -29,9 +29,7 @@ public class UserServiceImp implements UserService{
 	{
 		if (!bindingResult.hasErrors()) { // validation errors		
     		if (userForm.getPassword().equals(userForm.getPasswordCheck())) { // check password match		
-    				
-    			User user = UserMapper.UserDto(userForm.getName(), userForm.getPassword(), userForm.getUsername());
-    		
+    			User user = UserMapper.UserDto(userForm.getFirstName(),userForm.getLastName(), userForm.getPassword(), userForm.getUsername());
     			Set<Role> roles = new HashSet<Role>();
     			roles.add(roleRepository.findByName(userForm.getRole()).get());
 		    	if (userRepository.findByEmail(userForm.getUsername()) == null) {

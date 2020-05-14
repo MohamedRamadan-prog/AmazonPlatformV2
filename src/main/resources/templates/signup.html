@@ -10,9 +10,14 @@
 	<div class="col-md-4" style="width:800px; margin:0 auto;">
 		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
 		
-		<input type="text" th:field="*{name}" class="form-control"
-				placeholder="Name"  />
-			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="text-color:red">Password Match Error</p>	
+		<input type="text" th:field="*{firstName}" class="form-control"
+				placeholder="firstName"  />
+			<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="text-color:red">Password Match Error</p>	
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			
+			<input type="text" th:field="*{lastName}" class="form-control"
+				placeholder="lastName"  />
+			<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="text-color:red">Password Match Error</p>	
 			<div style="clear: both; display: block; height: 10px;"></div>	
 			
 			<input type="text" th:field="*{username}" class="form-control"

@@ -7,19 +7,19 @@ import amazon.layer.domainn.User;
 
 public class UserMapper {
 
-	public static User UserDto(String name, String password, String email) {
+	public static User UserDto(String firstName , String lastName, String password, String email) {
 
 		User newUser = new User();
 		String pwd = password;
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
 		String hashPwd = bc.encode(pwd);
 
-		newUser.setName(name);
+		newUser.setName(firstName +" " + lastName);
+		newUser.setFirstName(firstName);
+		newUser.setLastName(lastName);
 		newUser.setPassword(hashPwd);
 		newUser.setEmail(email);
 		newUser.setAddress(new Address("IOWA", "fairField", "123654", "4st"));
-		newUser.setFirstName("-");
-		newUser.setLastName("-");
 
 		return newUser;
 	}
