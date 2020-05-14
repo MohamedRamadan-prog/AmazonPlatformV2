@@ -44,24 +44,18 @@ public class ProductController {
 	@Autowired
 	private BuyerService buyerService;
 
-<<<<<<< HEAD
-	@PreAuthorize("hasRole('ROLE_BUYER')")
-=======
 	@Autowired
 	private OrderService orderService;
 
->>>>>>> filterBug
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/list")
 	public String list(Model model, Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
 		String username = authentication.getName();
 		model.addAttribute("followingSellers", buyerService.getBuyerFlowingList(username));
-<<<<<<< HEAD
-=======
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Integer ordersCount = orderService.getOrdersOfBuyer(((UserDetails) principal).getUsername()).size();
 		model.addAttribute("ordersCount", ordersCount);
->>>>>>> filterBug
 		return "buyerHome";
 	}
 
