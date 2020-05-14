@@ -22,6 +22,7 @@ import amazon.layer.domainn.Address;
 import amazon.layer.domainn.Order;
 import amazon.layer.domainn.OrderStatus;
 import amazon.layer.domainn.Payment;
+import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.service.OrderService;
 import amazon.layer.service.ReportManagerService;
@@ -122,7 +123,16 @@ public class OrderController {
 		System.out.println(currenrUser.getPoints());
 		userService.saveUser(currenrUser);
 
+		Hashtable cart = (Hashtable) session.getAttribute("shoppingCart");
+		Set<Product> products = cart.keySet();
+
+		double totalPrice = 0;
+		for (Product product : products) {
+			int q = (int) cart.get(product);
+			totalPrice = totalPrice + (q * product.getPrice());
+		}
 		session.setAttribute("points", currenrUser.getPoints());
+		session.setAttribute("totalPrice", totalPrice);
 
 		return "ConfirmPage";
 	}
@@ -156,22 +166,23 @@ public class OrderController {
 	public String cancelOrder(@RequestParam("orderId") Long id, Model model) {
 
 		boolean isCancelled = orderService.cancelOrder(id);
-		
+
 		if (isCancelled)
 			model.addAttribute("error", false);
 
 		model.addAttribute("error", true);
-		model.addAttribute("errorMessage" , "You can't cancel order not in placed status");
+		model.addAttribute("errorMessage", "You can't cancel order not in placed status");
 		return "forward:/buyer/ordersHistory";
 	}
 
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/generateInvoice")
-	public String downloadInvoice(@RequestParam("orderId") Long id , Model model) throws FileNotFoundException, JRException {
+	public String downloadInvoice(@RequestParam("orderId") Long id, Model model)
+			throws FileNotFoundException, JRException {
 
 		String path = reportManagerService.generatePdfInvoice(id);
 		model.addAttribute("error", true);
-		model.addAttribute("errorMessage" , "Invoice Succfully Downloaded to  "  + path);
+		model.addAttribute("errorMessage", "Invoice Succfully Downloaded to  " + path);
 		return "forward:/buyer/ordersHistory";
 	}
 }
