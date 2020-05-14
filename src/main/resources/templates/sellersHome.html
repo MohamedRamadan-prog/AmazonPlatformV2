@@ -108,6 +108,21 @@
     </div>
 </div>
 <div class="container mt-2">
+  <div id="message" style="display:none;" th:if="${isPurchased}">
+        
+        <h3>This product is already been purchased,
+cannot deleted </h3>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
+        //When the page has loaded.
+        $( document ).ready(function(){
+            $('#message').fadeIn('slow', function(){
+               $('#message').delay(4000).fadeOut(); 
+            });
+        });
+        </script>
     <div class="row">
         <div th:each="product : ${sellerProducts}" class="col-md-3 col-sm-6">
             <form th:action="@{/products/removeProduct}" method="POST">

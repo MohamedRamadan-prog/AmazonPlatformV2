@@ -153,11 +153,12 @@ public class ProductController {
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
-	public String removeProduct(@RequestParam(value = "id", required = false) Long productId) {
+	public String removeProduct(@RequestParam(value = "id", required = false) Long productId , Model model) {
 
 		boolean isDeleted = productService.deleteById(productId);
+		model.addAttribute("isPurchased" , !isDeleted);
 
-		return "redirect:/home";
+		return "forward:/home";
 	}
 
 }
