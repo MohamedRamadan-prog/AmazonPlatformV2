@@ -26,14 +26,30 @@
 
 
 			<input type="text" th:field="*{name}" class="form-control mb-4 col-4"
-				placeholder="Product Name"> <input type="text"
+				placeholder="Product Name">
+				<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="text-color:red">Password Match Error</p>	
+			    <div style="clear: both; display: block; height: 10px;"></div>	
+				
+			 <input type="text"
 				th:field="*{discription}" class="form-control mb-4 col-4"
-				placeholder="Discription"> <input type="text"
+				placeholder="Discription">
+			    <p th:if="${#fields.hasErrors('discription')}" th:errors="*{discription}" style="text-color:red">Password Match Error</p>	
+			    <div style="clear: both; display: block; height: 10px;"></div>	
+			
+				
+				<input type="text"
 				th:field="*{quntityAvaliable}" class="form-control mb-4 col-4"
 				placeholder="Units In Stock">
+				<p th:if="${#fields.hasErrors('quntityAvaliable')}" th:errors="*{quntityAvaliable}" style="text-color:red">Password Match Error</p>	
+			    <div style="clear: both; display: block; height: 10px;"></div>	
+			
+				
 				<input type="text"
 				th:field="*{price}" class="form-control mb-4 col-4"
 				placeholder="Unit Price">
+				<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="text-color:red">Password Match Error</p>	
+			    <div style="clear: both; display: block; height: 10px;"></div>	
+			
 				
 				 <input name="productImage"
 				id="productImage"  class="btn btn-outline-secondary mb-4 col-4" type="file" /> 

@@ -11,23 +11,23 @@
 		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
 		
 		<input type="text" th:field="*{name}" class="form-control"
-				placeholder="Name" />
+				placeholder="Name"  />
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="text-color:red">Password Match Error</p>	
 			<div style="clear: both; display: block; height: 10px;"></div>	
 			
 			<input type="text" th:field="*{username}" class="form-control"
 				placeholder="Username" />
-			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
-			<div style="clear: both; display: block; height: 10px;"></div>	
-			
-			
+			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="text-color:red">Username Error</p>
+			<div style="clear: both; display: block; height: 10px;"></div>	                
+                
 			<input type="password" th:field="*{password}" class="form-control"
 				placeholder="Password" />
-			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="text-color:red" >Password Error</p>
 			<div style="clear: both; display: block; height: 10px;"></div>	
 					
 			<input type="password" th:field="*{passwordCheck}" class="form-control"
 				placeholder="Re-enter Password" />
-			<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Password Match Error</p>
+			<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}" style="text-color:red">Password Match Error</p>
 	
 			
 				<br>Select Account Type<br> 

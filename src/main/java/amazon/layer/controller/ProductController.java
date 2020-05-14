@@ -103,7 +103,12 @@ public class ProductController {
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public String processUpdateProduct(@RequestParam(value = "id", required = false) Long productId,
-			@ModelAttribute("product") ProductForm product) {
+			@Valid @ModelAttribute("product") ProductForm product,	BindingResult result) {
+		if(result.hasErrors())
+		{
+			return "updateProduct";
+		}
+		
 		MultipartFile productImage = product.getProductImage();
 		storageService.saveImage(productImage, productId);
 		productService.update(product, productId);
@@ -124,8 +129,7 @@ public class ProductController {
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,
-			BindingResult result) {
+	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,	BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "addProduct";

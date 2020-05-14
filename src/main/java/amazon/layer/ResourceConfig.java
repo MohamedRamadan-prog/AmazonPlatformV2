@@ -19,5 +19,16 @@ public class ResourceConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/images/**").
 				addResourceLocations("classpath:/static/images/");
 		registry.addResourceHandler("/users").addResourceLocations(ServletContext.getRealPath("/users"));
-	}
+	}	
+
 }
+
+
+
+
+
+
+
+
+
+

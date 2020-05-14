@@ -1,5 +1,6 @@
 package amazon.layer.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -7,22 +8,24 @@ import org.springframework.lang.NonNull;
 
 
 public class UserForm {
-    
-	 @NotEmpty
-	 private String name = "";
+   
+	@NotEmpty(message = "This field is required")
+	private String name = "";
 	 
-	@NotEmpty
-    @Size(min=5, max=30)
+	@NotEmpty(message = "This field is required")
+	@Size(min = 4, max = 50, message = "This field must be from 4 min tp 50 max ")
+	@Email(message = "must be in Email Form '*.*.com' ")
     private String username = "";
 
-    @NotEmpty
-    @Size(min=7, max=30)
+	@NotEmpty(message = "This field is required")
+	@Size(min = 4, max = 50, message = "This field must be from 4 min tp 50 max ")
     private String password = "";
 
-    @NotEmpty
-    @Size(min=7, max=30)
+	@NotEmpty(message = "This field is required")
+	@Size(min = 4, max = 50, message = "This field must be from 7 min tp 50 max ")
     private String passwordCheck = "";
-    @NotEmpty
+
+    @NotEmpty(message = "field is required")
     @NonNull
     private String role = "";
 

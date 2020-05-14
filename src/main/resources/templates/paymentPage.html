@@ -23,10 +23,17 @@
 					Card Number:
 					<br>
 					<input type="text"  th:field="*{number}" placeholder="Number" />
+					<p th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="text-color:red">Card Number</p>	
+					<div style="clear: both; display: block; height: 10px;"></div>	
+			
+					
 					<br>
 					Card CSV:
 					<br>
 					<input type="text"  th:field="*{csv}" placeholder="csv" />
+					<p th:if="${#fields.hasErrors('csv')}" th:errors="*{csv}" style="text-color:red">Card CSV</p>	
+					<div style="clear: both; display: block; height: 10px;"></div>	
+		
 					<br>
 					Select Visa Type:
 					 <br>

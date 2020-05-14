@@ -26,18 +26,29 @@
 					State:
 					<br>
 					<input type="text"  th:field="${ShippingAddress.state}" placeholder="state" />
+					<p th:if="${#fields.hasErrors('state')}" th:errors="*{state}" style="text-color:red">Password Match Error</p>	
+			        <div style="clear: both; display: block; height: 10px;"></div>	
+				
 					<br>
 					City :
 					<br>
 					<input type="text"  th:field="${ShippingAddress.city}" placeholder="city" />
+					<p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" style="text-color:red">Password Match Error</p>	
+			        <div style="clear: both; display: block; height: 10px;"></div>	
 					<br>
 					Zip Code:
 					<br>
 					<input type="text"  th:field="${ShippingAddress.zipCode}" placeholder="zipCode" />
+					<p th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" style="text-color:red">Password Match Error</p>	
+			        <div style="clear: both; display: block; height: 10px;"></div>	
+					
 					<br>
 					Address Line :
 					<br>
 					<input type="text"  th:field="${ShippingAddress.addressLine}" placeholder="addressLine" />
+					<p th:if="${#fields.hasErrors('addressLine')}" th:errors="*{addressLine}" style="text-color:red">Password Match Error</p>	
+			        <div style="clear: both; display: block; height: 10px;"></div>	
+					
 					<br>
 										
 				<button type="submit" class="btn btn-info btn-sm ml-3 mr-1"onclick="if (!(confirm('Are you Sure of Your Addresses info ?'))) return false">Next</button>

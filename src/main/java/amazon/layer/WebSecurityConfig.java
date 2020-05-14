@@ -30,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	
     DataSource dataSource;
-    
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
     	http
@@ -42,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")
+                .failureUrl("/login?error=true")
                 .permitAll()
 	            .and()
 	            .logout()
