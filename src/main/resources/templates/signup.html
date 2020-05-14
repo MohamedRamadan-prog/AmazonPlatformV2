@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1>Sign-up</h1>
-	<div class="col-md-4">
+	<div class="col-md-4" style="width:800px; margin:0 auto;">
 		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
 		
 		<input type="text" th:field="*{name}" class="form-control"
@@ -19,7 +19,7 @@
 				placeholder="Username" />
 			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="text-color:red">Username Error</p>
 			<div style="clear: both; display: block; height: 10px;"></div>	                
-                
+   
 			<input type="password" th:field="*{password}" class="form-control"
 				placeholder="Password" />
 			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="text-color:red" >Password Error</p>

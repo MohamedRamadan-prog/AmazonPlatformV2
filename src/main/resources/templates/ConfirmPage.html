@@ -82,6 +82,8 @@
 					<th>City</th>
 					<th>Zip Code</th>
 					<th>Address Line</th>
+					<th>Total</th>
+					<th>Current Points</th>
 				</tr>
 			</thead>
 
@@ -92,30 +94,43 @@
 					<td th:text="${session.addedBillingAddress.city}" />
 					<td th:text="${session.addedBillingAddress.zipCode}" />
 					<td th:text="${session.addedBillingAddress.addressLine}" />
+					<td th:text="${session.totalPrice}" />
+					<td th:text="${session.points}" />
 				</tr>
 			</tbody>
 		</table>
 	</div>
 							 <div >
-								<form action="#" th:action="@{/orders/placeOrder}"
+							<form action="#" th:action="@{/orders/placeOrder}"
 									method="GET">
+								<input type="hidden" name="p" th:value="${session.points}">
                                     <h2>
-									You Have <span th:text="${session.points}" > </span>
-									Points
+									Total Cost <span th:text="${session.totalPrice}" > </span>
+									$
+										<button type="submit" class="btn btn-info btn-sm ml-3 mr-1"> Pay Full Amount </button>
 									</h2>
-									<button type="submit" class="btn btn-info btn-sm ml-3 mr-1"> Use My points </button>
-								</form>
+							</form>
 							</div>
 							<div>
 								<form action="#" th:action="@{/orders/placeOrder}"
 									  method="GET">
-									<input type="hidden" name="p" th:value= "0" >
-									<button type="submit" class="btn btn-info btn-sm ml-3 mr-1"> Place Order </button>
+									<h2>
+										Use Your Points To Pay
+										<div style="display: inline" th:if="${session.totalPrice} - ${session.points} >= 0">
+										<span th:text="${session.totalPrice} - ${session.points}" > </span>
+										</div>
+										<div style="display: inline" th:if="${session.totalPrice} - ${session.points} < 0">
+											<span> 0 </span>
+										</div>
+										$ Instead
+										<input type="hidden" name="p" th:value="${session.points}">
+										<button type="submit" class="btn btn-info btn-sm ml-3 mr-1"> Use My points </button>
+									</h2>
+								</form>
 								</form>
 							</div>
 
 
-							
 </body>
 </html>
 

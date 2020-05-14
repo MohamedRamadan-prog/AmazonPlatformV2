@@ -13,7 +13,7 @@ import amazon.layer.domainn.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-	@Query("from Order o where o.seller.email =:sellerEmail and o.orderStatus != 'CANCELLED' ")
+	@Query("from Order o where o.seller.email =:sellerEmail ")
 	public Set<Order> findOrderBySellerName(@Param("sellerEmail") String sellerEmail);
 
 	@Query("from Order o where o.buyer.email =:buyerEmail")

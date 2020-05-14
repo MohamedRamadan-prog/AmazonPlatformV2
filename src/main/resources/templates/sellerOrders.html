@@ -23,9 +23,10 @@
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th>Order Name</th>
+					<th>Order Code</th>
 					<th>Order Price</th>
 					<th>Order Status</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 
@@ -35,34 +36,28 @@
 					<td th:text="${order.Id}" />
 					<td th:text="${order.totalPrice}" />
 					<td th:text="${order.orderStatus}" />
-					<td>
+					<td th:if="${order.orderStatus.name() != 'CANCELLED'}">
 						
-						<div class="row">
-							<div class="col-small">
+						<div style="display: inline" class="row">
+							<div style="display: inline" class="col-small">
 								<!-- Add "update" button/link -->
-								<form action="#" th:action="@{/orders/updateOrderStatus}"
+								<form style="display: inline" action="#" th:action="@{/orders/updateOrderStatus}"
 									method="GET">
 
-									<select name="status">
+									<select style="margin-left: 20px;" name="status">
 										<option th:value= "${status}" th:text="${order.orderStatus}"></option>
 									    <option th:each="status : ${T(amazon.layer.domainn.OrderStatus).values()}"
 									    th:value="${status}" th:text="${status}"></option>
 									</select>
-
 									<input type="hidden" name="id" th:value="${order.Id}" />
-									<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">update</button>
-
+									<button style="display: inline" type="submit" class="btn btn-info btn-sm ml-3 mr-1">update</button>
 								</form>
-
 							</div>
 
-							<div class="col-small">
-								<!-- Add "update" button/link -->
-								<form action="#" th:action="@{/orders/order}" method="GET">
-
+							<div style="display: inline" class="col-small">
+								<form style="display: inline" action="#" th:action="@{/orders/order}" method="GET">
 									<input type="hidden" name="id" th:value="${order.Id}" />
 									<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Details</button>
-
 								</form>
 							</div>
 						</div>

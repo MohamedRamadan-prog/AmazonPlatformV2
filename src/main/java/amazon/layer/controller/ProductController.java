@@ -71,7 +71,6 @@ public class ProductController {
 	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
 		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
 		model.addAttribute("sellerNotActivated", false);
-
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Integer ordersCount = orderService.getOrdersOfSeller(((UserDetails) principal).getUsername()).size();
 		model.addAttribute("ordersCount", ordersCount);
