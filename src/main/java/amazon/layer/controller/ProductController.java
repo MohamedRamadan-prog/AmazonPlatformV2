@@ -22,6 +22,7 @@ import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.dto.ProductForm;
 import amazon.layer.service.BuyerService;
+import amazon.layer.service.OrderService;
 import amazon.layer.service.ProductService;
 import amazon.layer.service.StorageService;
 import amazon.layer.service.UserService;
@@ -32,22 +33,27 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	UserService userService;
-	
 
 	@Autowired
 	private StorageService storageService;
 
 	@Autowired
 	private BuyerService buyerService;
-	
+
+	@Autowired
+	private OrderService orderService;
+
 	@RequestMapping("/list")
-	public String list(Model model,Authentication authentication) {
+	public String list(Model model, Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
 		String username = authentication.getName();
 		model.addAttribute("followingSellers", buyerService.getBuyerFlowingList(username));
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfBuyer(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
 		return "buyerHome";
 	}
 
@@ -60,18 +66,20 @@ public class ProductController {
 	@RequestMapping("/getSellersProduct")
 	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
 		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfSeller(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
 		return "sellersHome";
 	}
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct,Authentication auth) {
-		String username = auth.getName(); 
+	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct, Authentication auth) {
+		String username = auth.getName();
 		User seller = userService.getUserByEmail(username);
-		if(seller.isActive())
-		{
+		if (seller.isActive()) {
 			return "addProduct";
 		}
-		
+
 		return "addProduct";
 	}
 
