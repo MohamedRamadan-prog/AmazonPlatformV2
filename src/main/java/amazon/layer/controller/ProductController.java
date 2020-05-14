@@ -62,18 +62,21 @@ public class ProductController {
 	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
 	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
 		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
+		 model.addAttribute("sellerNotActivated" , false);
+
 		return "sellersHome";
 	}
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct, Authentication auth) {
+	public String getAddNewProductForm(@ModelAttribute("newProduct") ProductForm newProduct, Authentication auth , Model model) {
 		String username = auth.getName();
 		User seller = userService.getUserByEmail(username);
 		if (seller.isActive()) {
 			return "addProduct";
 		}
 
+		 model.addAttribute("sellerNotActivated" , true);
 		return "sellersHome";
 	}
 
