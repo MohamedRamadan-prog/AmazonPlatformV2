@@ -18,25 +18,6 @@
 </div>
 <br>
 
-		<div>
-			<h3 style="Display:inline">Following Sellers  </h3>
-			
-			
-			<form action="#" th:action="@{/buyer/getProductSellerForBuyer}"
-									method="GET">
-													
-					<select name="status" >
-			    		<option  th:each="status : ${followingSellers}"
-									    th:value="${status.id}" th:text="${status.name}"></option>
-					</select>				
-						
-					<button type="submit" class="btn btn-info btn-sm ml-3 mr-1">Get Product</button>
-							
-			</form>
-		</div>
-		<br>
-		<br>
-
 <div class="container">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
@@ -127,6 +108,22 @@
             </div>
         </div>
     </div>
+</div>
+<a class="btn btn-primary btn-lg btn-block" data-toggle="collapse" href="#followFilter" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Vendors You Follow
+</a>
+<div class="collapse" id="followFilter">
+
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+        <ul id="myUL">
+            <li th:each="seller : ${followingSellers}">
+                <form action="#" th:action="@{/buyer/getProductSellerForBuyer}" method="GET">
+                    <input type="hidden" name="sellerId" th:value="${seller.id}">
+                    <a onclick="this.parentNode.submit()" th:text="${seller.name}"></a>
+                </form>
+            </li>
+        </ul>
 </div>
 </body>
 </html>

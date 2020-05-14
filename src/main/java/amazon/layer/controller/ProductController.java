@@ -47,7 +47,7 @@ public class ProductController {
 	public String list(Model model,Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
 		String username = authentication.getName();
-		model.addAttribute("followingSellers",buyerService.getBuyerFlowingList(username));
+		model.addAttribute("followingSellers", buyerService.getBuyerFlowingList(username));
 		return "buyerHome";
 	}
 
