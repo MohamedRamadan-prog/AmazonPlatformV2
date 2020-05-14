@@ -88,6 +88,7 @@ public class ProductController {
 		}
 
 		model.addAttribute("sellerNotActivated", true);
+		model.addAttribute("ordersCount", 0);
 		return "sellersHome";
 	}
 
