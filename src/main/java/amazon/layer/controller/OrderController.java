@@ -22,6 +22,7 @@ import amazon.layer.domainn.Address;
 import amazon.layer.domainn.Order;
 import amazon.layer.domainn.OrderStatus;
 import amazon.layer.domainn.Payment;
+import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.service.OrderService;
 import amazon.layer.service.ReportManagerService;
@@ -120,8 +121,19 @@ public class OrderController {
 		System.out.println(currenrUser.getPoints());
 		userService.saveUser(currenrUser);
 
+		
+		Hashtable cart = (Hashtable) session.getAttribute("shoppingCart");	
+		Set<Product> products=cart.keySet();
+		
+		double totalPrice = 0;
+		for(Product product : products)
+		{
+			int q = (int) cart.get(product);
+			totalPrice = totalPrice +  (q*product.getPrice());
+		}				    
 		session.setAttribute("points",currenrUser.getPoints());
-
+		session.setAttribute("totalPrice",currenrUser.getPoints());
+		
 		return "ConfirmPage";
 	}
 	@PreAuthorize("hasRole('ROLE_BUYER')")
