@@ -12,22 +12,6 @@
 </head>
 <body>
 <div th:replace="Navbar"></div>
-<div class="panel panel-default panel-order">
-    <div class="panel-heading">
-        <strong>Order history</strong>
-        <div class="btn-group pull-right">
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                    Filter history <i class="fa fa-filter"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="#">Approved orders</a></li>
-                    <li><a href="#">Pending orders</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <div th:each="order : ${orders}" class="panel-body">
         <h1 style="display: inline">Order </h1>
         <h1 style="display: inline; margin-bottom: 20px;" th:text="${order.id}"></h1>
@@ -80,7 +64,6 @@
             </div>
         </div>
     </div>
-    <div class="panel-footer">Put here some note for example: bootdey si a gallery of free bootstrap snippets</div>
 </div>
 </body>
 </html>
