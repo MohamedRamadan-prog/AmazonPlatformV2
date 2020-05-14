@@ -30,14 +30,14 @@ import net.sf.jasperreports.engine.JRException;
 
 @Controller
 @RequestMapping("orders")
-@SessionAttributes({"addedshippingAddress","addedBillingAddress","addedpayment","currentOrder","shoppingCart","points"})
-
+@SessionAttributes({ "addedshippingAddress", "addedBillingAddress", "addedpayment", "currentOrder", "shoppingCart",
+		"points" })
 
 public class OrderController {
 
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	UserService userService;
 
@@ -94,12 +94,14 @@ public class OrderController {
 
 		return "redirect:/orders/CreateBillingAddress";
 	}
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/CreateBillingAddress")
 	public String CreateBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress) {
 		return "OrderBillingAddress";
 
 	}
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/setBillingAddress")
 	public String setBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress, HttpSession session) {
@@ -110,27 +112,28 @@ public class OrderController {
 
 		return "redirect:/orders/confirmOrder";
 	}
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/confirmOrder")
-	public String confirmOrder(HttpSession session,Model model , Authentication authentication)
-	{	
+	public String confirmOrder(HttpSession session, Model model, Authentication authentication) {
 		String username = authentication.getName();
 		User currenrUser = userService.getUserByEmail(username);
-		currenrUser.setPoints(currenrUser.getPoints()+5);
+		currenrUser.setPoints(currenrUser.getPoints() + 5);
 		System.out.println(currenrUser.getPoints());
 		userService.saveUser(currenrUser);
 
-		session.setAttribute("points",currenrUser.getPoints());
+		session.setAttribute("points", currenrUser.getPoints());
 
 		return "ConfirmPage";
 	}
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/placeOrder")
-	public String placeOrder(@ModelAttribute("p")Integer points , HttpSession session,Authentication authentication,Model model,SessionStatus status)
-	{	
-		System.out.println("palce order"+ points);
+	public String placeOrder(@ModelAttribute("p") Integer points, HttpSession session, Authentication authentication,
+			Model model, SessionStatus status) {
+		System.out.println("palce order" + points);
 		System.out.println();
-		
+
 		Payment payment = (Payment) session.getAttribute("addedpayment");
 		Address shipAddress = (Address) session.getAttribute("addedshippingAddress");
 		Address billAddress = (Address) session.getAttribute("addedBillingAddress");
@@ -139,29 +142,36 @@ public class OrderController {
 
 		User currenrUser = userService.getUserByEmail(username);
 
-		orderService.placeOrder( payment, shipAddress, billAddress, cart , username, points);
-		
+		orderService.placeOrder(payment, shipAddress, billAddress, cart, username, points);
+
 		status.setComplete();
-		
-		session.setAttribute("shoppingCart", new Hashtable<Long,Integer>());
+
+		session.setAttribute("shoppingCart", new Hashtable<Long, Integer>());
 
 		return "redirect:/buyer/ordersHistory";
 	}
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/cancelOrder")
-	public String cancelOrder(@RequestParam("orderId") Long id) {
+	public String cancelOrder(@RequestParam("orderId") Long id, Model model) {
 
 		boolean isCancelled = orderService.cancelOrder(id);
+		
+		if (isCancelled)
+			model.addAttribute("error", false);
 
-		// TODO handle if order can not be cancelled
-		return "redirect:/buyer/ordersHistory";
+		model.addAttribute("error", true);
+		model.addAttribute("errorMessage" , "You can't cancel order not in placed status");
+		return "forward:/buyer/ordersHistory";
 	}
+
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/generateInvoice")
-	public String downloadInvoice(@RequestParam("orderId") Long id) throws FileNotFoundException, JRException {
+	public String downloadInvoice(@RequestParam("orderId") Long id , Model model) throws FileNotFoundException, JRException {
 
-		reportManagerService.generatePdfInvoice(id);
-
-		return "redirect:/buyer/ordersHistory";
+		String path = reportManagerService.generatePdfInvoice(id);
+		model.addAttribute("error", true);
+		model.addAttribute("errorMessage" , "Invoice Succfully Downloaded to  "  + path);
+		return "forward:/buyer/ordersHistory";
 	}
 }

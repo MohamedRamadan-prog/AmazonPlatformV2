@@ -31,7 +31,7 @@ public class ReportManagerServiceImpl implements ReportManagerService {
 	private ServletContext servletContext;
 
 	@Override
-	public void generatePdfInvoice(Long orderId) throws FileNotFoundException, JRException {
+	public String generatePdfInvoice(Long orderId) throws FileNotFoundException, JRException {
 
 		String path = servletContext.getRealPath("invoices/");
 
@@ -53,6 +53,8 @@ public class ReportManagerServiceImpl implements ReportManagerService {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
 		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "/invoice.pdf");
+		
+		return path;
 
 	}
 
