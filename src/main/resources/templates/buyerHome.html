@@ -119,7 +119,7 @@
         <ul id="myUL">
             <li th:each="seller : ${followingSellers}">
                 <form action="#" th:action="@{/buyer/getProductSellerForBuyer}" method="GET">
-                    <input type="hidden" name="sellerId" th:value="${seller.id}">
+                    <input type="hidden" name="status" th:value="${seller.id}">
                     <a onclick="this.parentNode.submit()" th:text="${seller.name}"></a>
                 </form>
             </li>
