@@ -91,6 +91,9 @@ public class BuyerController {
 		String username = authentication.getName();
 		model.addAttribute("followingSellers",buyerService.getBuyerFlowingList(username));
 		model.addAttribute("products", products);
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfBuyer(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
 		return "buyerHome";
 	}
 	
