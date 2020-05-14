@@ -167,8 +167,11 @@ public class OrderController {
 
 		boolean isCancelled = orderService.cancelOrder(id);
 
-		if (isCancelled)
+		if (isCancelled) {
 			model.addAttribute("error", false);
+			return "forward:/buyer/ordersHistory";
+
+		}
 
 		model.addAttribute("error", true);
 		model.addAttribute("errorMessage", "You can't cancel order not in placed status");
