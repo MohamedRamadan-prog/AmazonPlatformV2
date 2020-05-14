@@ -33,8 +33,8 @@
 				<br>Select Account Type<br> 
 				<select th:field="*{role}">
 					    <option th:value= null th:text="--"></option>
-					    <option th:value="SELLER" th:text="Seller"></option>
-					    <option th:value="BUYER" th:text="Buyer"></option>
+					    <option th:value="ROLE_SELLER" th:text="Seller"></option>
+					    <option th:value="ROLE_BUYER" th:text="Buyer"></option>
 				</select>
 				<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}">You have to select role </p>
 
