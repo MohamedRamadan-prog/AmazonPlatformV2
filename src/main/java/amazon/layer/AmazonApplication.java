@@ -74,7 +74,7 @@ public class AmazonApplication {
 			User buyer = new User("buyer", "buyer@gmail.com",
 					"$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", roles4, "-", "-",
 					new Address("IOWA", "fairField", "123654", "4st"));
-
+			
 			userReository.save(seller);
 			userReository.save(seller2);
 			userReository.save(buyer);

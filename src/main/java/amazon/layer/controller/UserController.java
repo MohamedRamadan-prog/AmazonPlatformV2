@@ -35,7 +35,7 @@ public class UserController {
 	UserService userService;
 	
 
-	@RequestMapping("/login")
+	@RequestMapping("/login/**")
 	public String defaultlogin(Model model) {
 		return "index";
 	}
@@ -68,13 +68,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/saveuser", method = RequestMethod.POST)
-	public String userSave( @Valid @ModelAttribute("signupform") UserForm userForm, BindingResult bindingResult) {
-
-		System.out.println("inside signup");
+	public String userSave(@Valid @ModelAttribute("signupform") UserForm userForm, BindingResult bindingResult) {
+			System.out.println("on");
 		if (!userService.save(userForm, bindingResult)) {
-			System.out.println("Error");
 
-			return "redirect:/signup";
+			return "signup";
 		}
 
 		return "redirect:/login";

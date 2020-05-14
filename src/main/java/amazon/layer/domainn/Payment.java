@@ -1,7 +1,10 @@
 package amazon.layer.domainn;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -9,9 +12,12 @@ public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@NotEmpty()
+	
+	@NotEmpty(message = "Required field")
+	@Size(min = 15 , max = 17 , message = "this field has to be 16 Digits")
 	private String number;
-	@NotEmpty()
+	@NotEmpty(message = "Required field")
+	@Size(min = 2 , max = 4 , message = "this field has to be 3 Digits")
 	private String csv;
 	@Enumerated(EnumType.STRING)
 	PaymentType payType;

@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,7 +90,12 @@ public class OrderController {
 
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/SetShippingAddress")
-	public String SetShippingAddress(@ModelAttribute("ShippingAddress") Address shippingAdrress, HttpSession session) {
+	public String SetShippingAddress(@Valid @ModelAttribute("ShippingAddress") Address shippingAdrress, BindingResult bindingResult , HttpSession session) {
+		
+		if(bindingResult.hasErrors())
+			{
+				return "OrderShippingAddress";
+			}
 		session.setAttribute("addedshippingAddress", shippingAdrress);
 		Address shAddress = (Address) session.getAttribute("addedshippingAddress");
 		System.out.println(shAddress.getCity());
@@ -105,8 +112,13 @@ public class OrderController {
 
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/setBillingAddress")
-	public String setBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress, HttpSession session) {
+	public String setBillingAddress(@ModelAttribute("BillingAddress")  Address billingAddress, BindingResult bindingResult , HttpSession session) {
 
+			if(bindingResult.hasErrors())
+			{
+				return "OrderBillingAddress";
+			}
+		
 		session.setAttribute("addedBillingAddress", billingAddress);
 		Address biAddress = (Address) session.getAttribute("addedBillingAddress");
 		System.out.println(biAddress.getCity());

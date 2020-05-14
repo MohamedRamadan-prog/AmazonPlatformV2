@@ -46,6 +46,12 @@ Author URL: http://w3layouts.com
 							</div>
 						</div>
 						<div class="bottom-content">
+				        	<div class="alert alert-danger" th:if="${param.error}">
+				        	    Invalid username and password.
+					        </div>
+					        <div class="alert alert-warning" th:if="${param.logout}">
+					            You have been logged out.
+					        </div>
 							<form th:action="@{/login}" method="post">
 									<input type="email" name="username" class="input-form" placeholder="Your Email"
 										required="required" />

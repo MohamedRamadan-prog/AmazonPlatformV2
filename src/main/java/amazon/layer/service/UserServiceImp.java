@@ -39,12 +39,10 @@ public class UserServiceImp implements UserService{
 		    		userRepository.save(user);
 		    	}
 		    	else {
-	    			bindingResult.rejectValue("username", "error.userexists", "Username already exists");    	
 	    			return false;		    		
 		    	}
     		}
     		else {
-    			bindingResult.rejectValue("passwordCheck", "error.pwdmatch", "Passwords does not match");    	
     			return false;
     		}
     	}
