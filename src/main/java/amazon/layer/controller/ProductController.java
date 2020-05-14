@@ -68,11 +68,16 @@ public class ProductController {
 
 	@RequestMapping("/getSellersProduct")
 	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
-	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
-		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
+	public String getSellersProducts(Model model, @RequestParam(value = "email", required = false) String sellerEmail) {
 		model.addAttribute("sellerNotActivated", false);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Integer ordersCount = orderService.getOrdersOfSeller(((UserDetails) principal).getUsername()).size();
+		if (sellerEmail != null)
+			model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
+		else
+			model.addAttribute("sellerProducts",
+					productService.getSellerProducts(((UserDetails) principal).getUsername()));
+
 		model.addAttribute("ordersCount", ordersCount);
 		return "sellersHome";
 	}
@@ -103,12 +108,11 @@ public class ProductController {
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public String processUpdateProduct(@RequestParam(value = "id", required = false) Long productId,
-			@Valid @ModelAttribute("product") ProductForm product,	BindingResult result) {
-		if(result.hasErrors())
-		{
+			@Valid @ModelAttribute("product") ProductForm product, BindingResult result) {
+		if (result.hasErrors()) {
 			return "updateProduct";
 		}
-		
+
 		MultipartFile productImage = product.getProductImage();
 		storageService.saveImage(productImage, productId);
 		productService.update(product, productId);
@@ -129,7 +133,8 @@ public class ProductController {
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,	BindingResult result) {
+	public String processAddNewProductForm(@Valid @ModelAttribute("newProduct") ProductForm newProduct,
+			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "addProduct";
@@ -153,12 +158,12 @@ public class ProductController {
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
-	public String removeProduct(@RequestParam(value = "id", required = false) Long productId , Model model) {
+	public String removeProduct(@RequestParam(value = "id", required = false) Long productId, Model model) {
 
 		boolean isDeleted = productService.deleteById(productId);
-		model.addAttribute("isPurchased" , !isDeleted);
+		model.addAttribute("isPurchased", !isDeleted);
 
-		return "forward:/home";
+		return "forward:/products/getSellersProduct";
 	}
 
 }
