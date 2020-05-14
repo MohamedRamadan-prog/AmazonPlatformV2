@@ -23,6 +23,7 @@ import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.dto.ProductForm;
 import amazon.layer.service.BuyerService;
+import amazon.layer.service.OrderService;
 import amazon.layer.service.ProductService;
 import amazon.layer.service.StorageService;
 import amazon.layer.service.UserService;
@@ -43,12 +44,24 @@ public class ProductController {
 	@Autowired
 	private BuyerService buyerService;
 
+<<<<<<< HEAD
 	@PreAuthorize("hasRole('ROLE_BUYER')")
+=======
+	@Autowired
+	private OrderService orderService;
+
+>>>>>>> filterBug
 	@RequestMapping("/list")
 	public String list(Model model, Authentication authentication) {
 		model.addAttribute("products", productService.getAllProducts());
 		String username = authentication.getName();
 		model.addAttribute("followingSellers", buyerService.getBuyerFlowingList(username));
+<<<<<<< HEAD
+=======
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfBuyer(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
+>>>>>>> filterBug
 		return "buyerHome";
 	}
 
@@ -62,6 +75,9 @@ public class ProductController {
 	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_SELLER')")
 	public String getSellersProducts(Model model, @RequestParam("email") String sellerEmail) {
 		model.addAttribute("sellerProducts", productService.getSellerProducts(sellerEmail));
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Integer ordersCount = orderService.getOrdersOfSeller(((UserDetails) principal).getUsername()).size();
+		model.addAttribute("ordersCount", ordersCount);
 		return "sellersHome";
 	}
 
