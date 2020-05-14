@@ -74,7 +74,7 @@ public class ProductController {
 			return "addProduct";
 		}
 
-		return "addProduct";
+		return "buyerHome";
 	}
 
 	@PreAuthorize("hasRole('ROLE_SELLER')")
