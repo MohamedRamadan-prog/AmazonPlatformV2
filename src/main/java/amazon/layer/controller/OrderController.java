@@ -132,7 +132,7 @@ public class OrderController {
 			totalPrice = totalPrice +  (q*product.getPrice());
 		}				    
 		session.setAttribute("points",currenrUser.getPoints());
-		session.setAttribute("totalPrice",currenrUser.getPoints());
+		session.setAttribute("totalPrice",totalPrice);
 		
 		return "ConfirmPage";
 	}
