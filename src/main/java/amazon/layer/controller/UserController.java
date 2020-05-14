@@ -69,9 +69,8 @@ public class UserController {
 
 	@RequestMapping(value = "/saveuser", method = RequestMethod.POST)
 	public String userSave(@Valid @ModelAttribute("signupform") UserForm userForm, BindingResult bindingResult) {
-			System.out.println("on");
-		if (!userService.save(userForm, bindingResult)) {
 
+		if (!userService.save(userForm, bindingResult)) {
 			return "signup";
 		}
 

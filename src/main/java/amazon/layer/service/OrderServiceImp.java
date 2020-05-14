@@ -18,6 +18,7 @@ import amazon.layer.domainn.Payment;
 import amazon.layer.domainn.Product;
 import amazon.layer.domainn.User;
 import amazon.layer.repository.OrderRepository;
+import amazon.layer.repository.ProductRepository;
 import amazon.layer.repository.UserRepository;
 
 @Service
@@ -27,6 +28,8 @@ public class OrderServiceImp implements OrderService {
 	OrderRepository orderRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	ProductRepository productRepository;
 
 	@Override
 	public Set<Order> getOrdersOfSeller(String sellerEmail) {
@@ -52,6 +55,9 @@ public class OrderServiceImp implements OrderService {
 		
 		for(Product product :products)
 		{
+			product.setPurchasedBefore(true);
+			productRepository.save(product);
+			
 			int quantity = (int)cart.get(product);
 			OrderLine orderline = new OrderLine(quantity,(product.getPrice()*quantity),product);
 			System.out.println(orderline.getProduct().getName());

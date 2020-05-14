@@ -10,8 +10,11 @@ import org.springframework.lang.NonNull;
 public class UserForm {
    
 	@NotEmpty(message = "This field is required")
-	private String name = "";
-	 
+	private String firstName = "";
+	
+	@NotEmpty(message = "This field is required")
+	private String lastName = "";
+
 	@NotEmpty(message = "This field is required")
 	@Size(min = 4, max = 50, message = "This field must be from 4 min tp 50 max ")
 	@Email(message = "must be in Email Form '*.*.com' ")
@@ -61,11 +64,20 @@ public class UserForm {
 		this.role = role;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
 }

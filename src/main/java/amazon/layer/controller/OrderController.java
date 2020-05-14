@@ -112,7 +112,7 @@ public class OrderController {
 
 	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/setBillingAddress")
-	public String setBillingAddress(@ModelAttribute("BillingAddress")  Address billingAddress, BindingResult bindingResult , HttpSession session) {
+	public String setBillingAddress(@Valid @ModelAttribute("BillingAddress")  Address billingAddress, BindingResult bindingResult , HttpSession session) {
 
 			if(bindingResult.hasErrors())
 			{
