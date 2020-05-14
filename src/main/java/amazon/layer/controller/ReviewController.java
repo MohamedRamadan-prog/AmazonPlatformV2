@@ -34,7 +34,7 @@ public class ReviewController {
 		reviewService.setReviewStatus(id);
 		return "redirect:/review/getReviws";
 	}
-	@PreAuthorize("hasRole('ROLE_BUYER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/addReview", method = { RequestMethod.POST })
 	public String addReview(@RequestParam("review") String comment, @RequestParam("productId") Long productId) {
 		reviewService.addReview(comment, productId);
