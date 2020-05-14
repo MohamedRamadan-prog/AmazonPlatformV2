@@ -34,13 +34,13 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	
+
 	@RequestMapping("/login")
 	public String defaultlogin(Model model) {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/home")
+	@RequestMapping(value = {"/home","/"})
 	public String home(Model model, Authentication authentication, RedirectAttributes rdr ,HttpSession session) {
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
@@ -63,13 +63,17 @@ public class UserController {
 	@RequestMapping(value = "/signup")
 	public String signUp(Model model) throws FileNotFoundException, JRException {
 		model.addAttribute("signupform", new UserForm());
+		System.out.println("create signUp");
 		return "signup";
 	}
 
 	@RequestMapping(value = "/saveuser", method = RequestMethod.POST)
-	public String userSave(@Valid @ModelAttribute("signupform") UserForm userForm, BindingResult bindingResult) {
+	public String userSave( @Valid @ModelAttribute("signupform") UserForm userForm, BindingResult bindingResult) {
 
+		System.out.println("inside signup");
 		if (!userService.save(userForm, bindingResult)) {
+			System.out.println("Error");
+
 			return "redirect:/signup";
 		}
 
