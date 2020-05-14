@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,7 @@ public class OrderController {
 	@Autowired
 	ReportManagerService reportManagerService;
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping("/activeList")
 	public String ordersList(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,6 +59,7 @@ public class OrderController {
 		return "sellerOrders";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER')")
 	@RequestMapping(value = "/updateOrderStatus")
 	public String updateOrderStaus(@RequestParam("status") String status, @RequestParam("id") Long id) {
 		System.out.println(id);
@@ -67,6 +70,7 @@ public class OrderController {
 		return "redirect:/orders/activeList";
 	}
 
+	@PreAuthorize("hasRole('ROLE_SELLER') or hasRole('ROLE_BUYER')")
 	@RequestMapping("/order")
 	public String getOrderDetails(@RequestParam(value = "id", required = true) Long orderId, Model model) {
 		Order order = orderService.getOrderById(orderId);
@@ -74,12 +78,14 @@ public class OrderController {
 		return "orderDetails";
 	}
 
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/CreateShippingAddress")
 	public String CreateShippingAddress(@ModelAttribute("ShippingAddress") Address shippingAdrress) {
 		return "OrderShippingAddress";
 
 	}
 
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/SetShippingAddress")
 	public String SetShippingAddress(@ModelAttribute("ShippingAddress") Address shippingAdrress, HttpSession session) {
 		session.setAttribute("addedshippingAddress", shippingAdrress);
@@ -88,13 +94,13 @@ public class OrderController {
 
 		return "redirect:/orders/CreateBillingAddress";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/CreateBillingAddress")
 	public String CreateBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress) {
 		return "OrderBillingAddress";
 
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/setBillingAddress")
 	public String setBillingAddress(@ModelAttribute("BillingAddress") Address billingAddress, HttpSession session) {
 
@@ -104,7 +110,7 @@ public class OrderController {
 
 		return "redirect:/orders/confirmOrder";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/confirmOrder")
 	public String confirmOrder(HttpSession session,Model model , Authentication authentication)
 	{	
@@ -118,7 +124,7 @@ public class OrderController {
 
 		return "ConfirmPage";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping("/placeOrder")
 	public String placeOrder(@ModelAttribute("p")Integer points , HttpSession session,Authentication authentication,Model model,SessionStatus status)
 	{	
@@ -141,7 +147,7 @@ public class OrderController {
 
 		return "redirect:/buyer/ordersHistory";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/cancelOrder")
 	public String cancelOrder(@RequestParam("orderId") Long id) {
 
@@ -150,7 +156,7 @@ public class OrderController {
 		// TODO handle if order can not be cancelled
 		return "redirect:/buyer/ordersHistory";
 	}
-
+	@PreAuthorize("hasRole('ROLE_BUYER')")
 	@RequestMapping(value = "/generateInvoice")
 	public String downloadInvoice(@RequestParam("orderId") Long id) throws FileNotFoundException, JRException {
 
